@@ -1,0 +1,35 @@
+
+        <form [formGroup]="">
+          <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+            <p class="lead fw-normal mb-0 me-3">Đăng nhập</p>
+          </div>
+
+          <!-- Email input -->
+          <div class="p-float-label mb-4">
+            <input id="p-inputtext-lg" class="custom-input" formControlName="userName" type="text"
+                   pInputText>
+            <label for="p-inputtext-lg">Tài khoản</label>
+          </div>
+
+          <!-- Password input -->
+          <div class="p-float-label custom-input mb-3">
+            <input id="p-inputtext-lg" class="custom-input" formControlName="password" type="text"
+                   pInputText/>
+            <label for="p-inputtext-lg">Mật khẩu</label>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- Checkbox -->
+            <div class="form-check mb-0">
+              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3"/>
+              <label class="form-check-label" for="form2Example3">
+                Ghi nhớ tài khoản
+              </label>
+            </div>
+            <a routerLink='forgotpass' class="text-body">Lấy lại mật khẩu?</a>
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button pButton type="button" label="Đăng nhập"></button>
+            <p class="small fw-bold mt-2 pt-1 mb-0">Đăng ký tài khoản ? <a href="#!" class="link-danger">ITSOL</a></p>
+          </div>

@@ -1,0 +1,16 @@
+<form>
+  <div class="form-group">
+    <label>Email</label>
+    <input class="form-control" [formControl]="email" type="text" />
+  </div>
+  <div>
+    <button  (click)='getOtp()' class="btn btn-success" style="float: right;">Gửi mã</button>
+  </div><br><br><br>
+  <div class="form-group">
+    <label>Mã OTP</label>
+    <input class="form-control" [formControl]="email" type="text" />
+  </div>
+  <div>
+    <button (click)='confirm()' class="btn btn-success"style="float: right;">Xác nhận</button>
+  </div>
+</form>
