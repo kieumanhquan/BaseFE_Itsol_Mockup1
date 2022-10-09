@@ -1,6 +1,11 @@
+import { ForgotService } from './forgot.service';
 import { Component,OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
+export interface User{
+  email?: string;
+  password?: string;
+}
 @Component({
   selector: 'ngx-forgot',
   templateUrl: './forgot.component.html',
@@ -8,20 +13,20 @@ import { FormControl } from '@angular/forms';
 })
 export class ForgotComponent implements OnInit {
 
+
   email = new FormControl('');
-  constructor() { }
+  otp = new FormControl('');
+  constructor(
+    private forgotService: ForgotService,
+   ) { }
 
   ngOnInit(): void {
   }
 
   getOtp(){
-    window.location.href= '/!';
-    alert(this.email.value);
+    console.log(this.email.value);
+    this.forgotService.putChangepass(this.email.value).subscribe(
+      (res)=>{
+      });
   }
-
-  confirm(){
-    window.location.href= '/!';
-    alert(this.email.value);
-  }
-
 }

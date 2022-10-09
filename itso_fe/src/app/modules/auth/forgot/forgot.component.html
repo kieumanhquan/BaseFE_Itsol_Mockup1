@@ -1,14 +1,18 @@
+<div>
+  <h1>Quên mật khẩu</h1>
+</div>
+
 <form>
   <div class="form-group">
     <label>Email</label>
     <input class="form-control" [formControl]="email" type="text" />
   </div>
   <div>
-    <button  (click)='getOtp()' class="btn btn-success" style="float: right;">Gửi mã</button>
+    <button  (click)='getOtp()' class="btn btn-success" style="float: right;">Lấy mã OTP</button>
   </div><br><br><br>
   <div class="form-group">
     <label>Mã OTP</label>
-    <input class="form-control" [formControl]="email" type="text" />
+    <input class="form-control" [formControl]="otp" type="text" />
   </div>
   <div>
     <button (click)='confirm()' class="btn btn-success"style="float: right;">Xác nhận</button>
