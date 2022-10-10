@@ -1,0 +1,17 @@
+<div>
+  <h1>Đổi mật khẩu</h1>
+</div>
+
+<form>
+  <div class="form-group">
+    <label>Nhập mật khẩu mới</label>
+    <input class="form-control" [formControl]="password" type="text" />
+  </div>
+  <div class="form-group">
+    <label>Xác nhận mật khẩu mới</label>
+    <input class="form-control" [formControl]="password" type="text" />
+  </div>
+  <div>
+    <button  (click)='change()' class="btn btn-success" style="float: right;">Lấy mã OTP</button>
+  </div>
+</form>
