@@ -1,5 +1,9 @@
 import { Component,OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService} from '../../../@core/services/auth.service';
+import {Router} from '@angular/router';
+import {ForgotService} from './forgot.service';
 
 @Component({
   selector: 'ngx-forgot',
@@ -8,20 +12,39 @@ import { FormControl } from '@angular/forms';
 })
 export class ForgotComponent implements OnInit {
 
-  email = new FormControl('');
-  constructor() { }
+  email=new FormControl('');
+  cpi: FormGroup;
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private readonly router: Router,
+    private forgotService: ForgotService,
+  ) { }
 
-  ngOnInit(): void {
+  //@Output() dataevent = new EventEmitter<string>();
+
+  ngOnInit(){
+    this.cpi = this.fb.group({
+      email: ['', [Validators.required, Validators.minLength(1), Validators.email]],
+    });
   }
 
-  getOtp(){
-    window.location.href= '/!';
-    alert(this.email.value);
+
+  public sendOtp(){
+    this.forgotService.sendOTP(this.cpi.value.email).subscribe(
+      (res)=> {
+        window.sessionStorage.setItem('email',this.cpi.value.email);
+        this.router.navigate(['/auth/change-password']).then(r => console.log(r));
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+
+    );
   }
 
-  confirm(){
-    window.location.href= '/!';
-    alert(this.email.value);
+  public checkOtp(){
+
   }
 
 }

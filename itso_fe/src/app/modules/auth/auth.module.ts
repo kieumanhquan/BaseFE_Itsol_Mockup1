@@ -7,6 +7,7 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {ForgotComponent} from './forgot/forgot.component';
 import { LoginComponent } from './login/login.component';
+import { ChangePassComponent } from './change-pass/change-pass.component';
 
 const routes: Routes = [{
   path: '',
@@ -28,6 +29,7 @@ const routes: Routes = [{
     AuthComponent,
     ForgotComponent,
     LoginComponent,
+    ChangePassComponent,
   ],
   imports: [
     CommonModule,
