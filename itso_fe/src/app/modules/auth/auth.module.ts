@@ -1,13 +1,13 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {AuthComponent} from './auth.component';
-import {RouterModule, Routes} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
-import {ButtonModule} from 'primeng/button';
-import {InputTextModule} from 'primeng/inputtext';
-import {ForgotComponent} from './forgot/forgot.component';
+import { ChangepassComponent } from './changepass/changepass.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AuthComponent } from './auth.component';
+import { RouterModule, Routes } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { ForgotComponent } from './forgot/forgot.component';
 import { LoginComponent } from './login/login.component';
-import { ChangePassComponent } from './change-pass/change-pass.component';
 
 const routes: Routes = [{
   path: '',
@@ -29,7 +29,7 @@ const routes: Routes = [{
     AuthComponent,
     ForgotComponent,
     LoginComponent,
-    ChangePassComponent,
+    ChangepassComponent,
   ],
   imports: [
     CommonModule,

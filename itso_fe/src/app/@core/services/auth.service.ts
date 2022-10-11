@@ -7,7 +7,9 @@ import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     'Content-Type': 'application/json',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     'Access-Control-Allow-Origin': '*',
   }),
 };

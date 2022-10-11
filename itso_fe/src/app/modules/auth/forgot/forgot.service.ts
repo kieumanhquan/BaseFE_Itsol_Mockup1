@@ -1,3 +1,4 @@
+import { User } from './../../home/profile/profile.model';
 import { Injectable } from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
@@ -15,4 +16,10 @@ export class ForgotService {
   sendOTP(email: any): Observable<any> {
     return this.http.get<any>(this.forgotAPI + email);
   }
+
+    putConfirm(user: User): Observable<any>{
+      return this.http.put<any>(this.forgotAPI +'changepass',user);
+  }
+
 }
+
