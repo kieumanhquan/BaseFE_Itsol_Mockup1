@@ -1,5 +1,5 @@
 
-        <form [formGroup]="">
+        <form [formGroup]="formLogin">
           <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
             <p class="lead fw-normal mb-0 me-3">Đăng nhập</p>
           </div>
@@ -18,11 +18,11 @@
             <label for="p-inputtext-lg">Mật khẩu</label>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center" style="float: right;">
+          <div class="d-flex justify-content-between align-items-center" style="float: right">
+
             <a routerLink='forgotpass' class="text-body">Lấy lại mật khẩu?</a>
           </div>
 
-          <div class="text-center text-lg-start mt-4 pt-2">
-            <button pButton type="button" label="Đăng nhập"></button>
-            <p class="small fw-bold mt-2 pt-1 mb-0">Đăng ký tài khoản ? <a href="#!" class="link-danger">ITSOL</a></p>
+          <div class="text-center text-lg-start mt-4 pt-3">
+            <button class="btn btn-primary" (click)="onSubmit()">Đăng nhập</button>
           </div>
