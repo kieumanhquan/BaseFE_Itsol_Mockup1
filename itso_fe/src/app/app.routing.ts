@@ -1,7 +1,9 @@
+
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { AuthGuard } from './@core/guards/auth.guard';
+import {ForgotComponent} from './modules/auth/forgot/forgot.component';
 
 export const routes: Routes = [
   {
@@ -19,6 +21,12 @@ export const routes: Routes = [
   },
   { path: '**',
     redirectTo: 'home',
+  },
+  { path: 'login',
+    component: ForgotComponent,
+  },
+  { path: 'forgotpass',
+    component: ForgotComponent,
   },
 ];
 
