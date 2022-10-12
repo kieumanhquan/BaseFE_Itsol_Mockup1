@@ -23,6 +23,10 @@ const routes: Routes = [{
       path: 'forgotpass',
       component: ForgotComponent,
     },
+    {
+      path: 'changepass',
+      component: ChangepassComponent,
+    },
   ],
 }];
 
