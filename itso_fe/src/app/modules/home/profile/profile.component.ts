@@ -1,4 +1,4 @@
-import { HttpResponse } from '@angular/common/http';
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PrimeNGConfig } from 'primeng/api';
@@ -11,7 +11,7 @@ import {ToastrService} from "ngx-toastr";
 @Component({
   selector: 'ngx-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
   [x: string]: any;
@@ -41,20 +41,19 @@ export class ProfileComponent implements OnInit {
       birthDay: ['', Validators.required],
       homeTown: ['', Validators.required],
       gender: ['', Validators.required],
-      fullName: ['', Validators.required]
+      fullName: ['', Validators.required],
     });
   }
 
   getByUserName(){
-    this.username=this.sessionService.getItem('auth-user')
+    this.username=this.sessionService.getItem('auth-user');
     this.profileService.getProfileByUserName(this.username).subscribe(
       (res)=>{
         this.updateForm(res);
         this.user = res;
 
 
-      }
-    )
+      });
   }
 
   updateForm(user: User): void {
@@ -65,15 +64,15 @@ export class ProfileComponent implements OnInit {
       phoneNumber:user.phoneNumber,
       birthDay:user.birthDay,
       homeTown:user.homeTown,
-      gender: user.gender
+      gender: user.gender,
     });
 
   }
   onSubmit(){
       this.updateUser();
       this.profileService.updateProfile(this.user).subscribe((res:any)=>{
-      this.toastr.success("Update thành công")
-      })
+      this.toastr.success("Update thành công");
+      });
   }
   updateUser(){
     let newUser = this.formProfile.value;

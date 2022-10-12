@@ -17,11 +17,11 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService,
-              private tokenService: TokenService,
-              private router: Router,
-              private userService: UserService,
-  ) { }
+    private authService: AuthService,
+    private tokenService: TokenService,
+    private router: Router,
+    private userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.initForm();

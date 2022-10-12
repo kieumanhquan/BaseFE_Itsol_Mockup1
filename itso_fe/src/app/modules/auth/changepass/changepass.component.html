@@ -1,17 +1,32 @@
-<div>
-  <h1>Đổi mật khẩu</h1>
-</div>
-
-<form>
-  <div class="form-group">
-    <label>Nhập mật khẩu mới</label>
-    <input class="form-control" [formControl]="password" type="text" />
-  </div>
-  <div class="form-group">
-    <label>Xác nhận mật khẩu mới</label>
-    <input class="form-control" [formControl]="repassword" type="text" />
-  </div>
+<form novalidate [formGroup]="cpc" (ngSubmit)="changePassWord()">
   <div>
-    <button class="btn btn-success" style="float: right;">Lấy mã OTP</button>
+    <h1>Đổi mật khẩu</h1>
   </div>
-</form>
+    <div class="form-group">
+      <label>Nhập mật khẩu mới</label>
+      <input class="form-control" formControlName="password" type="password" />
+      <small class="col alert text-danger" role="alert"
+             *ngIf="cpc.get('password')?.errors?.required && cpc.get('password')?.touched">
+        Bạn phải nhập mật khẩu mới !
+      </small>
+      <small class="col alert text-danger" role="alert"
+             *ngIf="cpc.get('password')?.errors?.pattern && cpc.get('password')?.touched">
+        Mật khẩu phải có 6 ký tự trở lên, bao gồm cả chữ, cả số và cả kí tự đặc biệt !
+      </small>
+    </div>
+    <div class="form-group">
+      <label>Xác nhận mật khẩu mới</label>
+      <input class="form-control" formControlName="repassword" type="password" />
+      <small class="col alert text-danger" role="alert"
+             *ngIf="cpc.get('repassword')?.errors?.required && cpc.get('repassword')?.touched">
+        Bạn phải nhập lại mật khẩu mới !
+      </small>
+      <small class="col alert text-danger" role="alert"
+             *ngIf="cpc.get('repassword')?.errors?.pattern && cpc.get('repassword')?.touched">
+        Mật khẩu phải có 6 ký tự trở lên, bao gồm cả chữ, cả số và cả kí tự đặc biệt !
+      </small>
+    </div>
+    <div>
+      <button class="btn btn-success" style="float: right;">Thay đổi mật khẩu</button>
+    </div>
+  </form>
