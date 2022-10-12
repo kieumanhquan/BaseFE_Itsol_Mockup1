@@ -12,10 +12,10 @@ export interface User{
   styleUrls: ['./changepass.component.scss'],
 })
 export class ChangepassComponent implements OnInit {
-
   password = new FormControl('');
-  private forgotService: any;
-  private email: string;
+  repassword = new FormControl('');
+  forgotService: any;
+  email: any;
   constructor() { }
 
   ngOnInit(): void {
@@ -24,7 +24,6 @@ export class ChangepassComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   user: User= null;
   confirm(){
-    this.user.email = this.email;
     this.user.password = this.password.value;
     this.forgotService.putChangepass(this.email).subscribe(
       (res)=>{

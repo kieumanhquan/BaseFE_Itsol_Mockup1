@@ -5,24 +5,24 @@
           </div>
 
           <!-- Email input -->
-          <div class="p-float-label mb-4">
+          <div class="p-float-label mb-4 mt-4">
             <input id="p-inputtext-lg" class="custom-input" formControlName="userName" type="text"
                    pInputText>
             <label for="p-inputtext-lg">Tài khoản</label>
           </div>
 
           <!-- Password input -->
-          <div class="p-float-label custom-input mb-3">
-            <input id="p-inputtext-lg" class="custom-input" formControlName="password" type="text"
+          <div class="p-float-label custom-input mb-3 mt-2">
+            <input id="p-inputtext-lg" class="custom-input" formControlName="password" type="password"
                    pInputText/>
             <label for="p-inputtext-lg">Mật khẩu</label>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center" style="float: right;">
+          <div class="d-flex justify-content-between align-items-center" style="float: right">
+
             <a routerLink='forgotpass' class="text-body">Lấy lại mật khẩu?</a>
           </div>
 
-          <div class="text-center text-lg-start mt-4 pt-2">
-            <button pButton type="button" label="Đăng nhập"></button>
-            <p class="small fw-bold mt-2 pt-1 mb-0">Đăng ký tài khoản ? <a href="#!" class="link-danger">ITSOL</a></p>
+          <div class="text-center text-lg-start mt-4 pt-3">
+            <button class="btn btn-primary" (click)="onSubmit()">Đăng nhập</button>
           </div>

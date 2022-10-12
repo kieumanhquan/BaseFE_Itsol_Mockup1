@@ -1,9 +1,9 @@
+import { UserService } from './../../../@core/services/user.service';
+import { Router } from '@angular/router';
+import { TokenService } from './../../../@core/services/token.service';
+import { AuthService } from './../../../@core/services/auth.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../../@core/services/auth.service";
-import {TokenService} from "../../../@core/services/token.service";
-import {Router} from "@angular/router";
-import {UserService} from "../../../@core/services/user.service";
 
 @Component({
   selector: 'ngx-login',
@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
       this.isLoggedIn = true;
       // this.roles = this.tokenService.getUser().roles;
     }
-
   }
+
 
   initForm() {
     this.formLogin = this.fb.group({
@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.formLogin.value);
     this.isSubmitted = true;
     if (this.formLogin.valid) {
       this.authService.login(this.formLogin.value).subscribe(
@@ -59,5 +60,8 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-
 }
+
+
+
+

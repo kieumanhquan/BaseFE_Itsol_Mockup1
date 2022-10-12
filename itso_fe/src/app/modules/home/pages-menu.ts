@@ -12,13 +12,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Người dùng',
+    title: 'Nhân sự',
     icon: 'person-outline',
-    link: '/home/user',
+    link: '/home/employee',
   },
   {
-    title: 'Sản phẩm',
+    title: 'Hợp đồng',
+    icon: 'person-outline',
+    link: '/home/contract',
+  },
+  {
+    title: 'Transfer',
     icon: 'globe-2-outline',
-    link: '/home/product',
+    link: '/home/transfer',
   },
 ];

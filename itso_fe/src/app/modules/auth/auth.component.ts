@@ -1,10 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../@core/services/auth.service';
-import { TokenService } from '../../@core/services/token.service';
-import {UserService} from '../../@core/services/user.service';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'ngx-auth',
@@ -12,12 +6,12 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
+  constructor() {
 
-  constructor(
-  ) { }
+  }
 
   ngOnInit(): void {
 
-    }
+  }
 
 }
