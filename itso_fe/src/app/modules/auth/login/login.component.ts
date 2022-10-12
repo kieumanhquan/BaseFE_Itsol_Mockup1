@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
+
   initForm() {
     this.formLogin = this.fb.group({
       userName: ['', Validators.required],

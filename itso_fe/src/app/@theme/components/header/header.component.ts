@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Thông tin cá nhân' }, { title: 'Đăng xuất'   } ];
+  userMenu = [ { title: 'Thông tin cá nhân' },{title: 'Đổi mật khẩu'}, { title: 'Đăng xuất'   } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -69,6 +69,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
       if(event.item.title==='Thông tin cá nhân'){
         this.router.navigate(['/home/profile'])
+      }
+      if(event.item.title == 'Đổi mật khẩu'){
+        this.router.navigate(['/home/change-password']);
       }
     });
 

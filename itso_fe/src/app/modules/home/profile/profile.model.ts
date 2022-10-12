@@ -6,5 +6,5 @@ export interface User {
     homeTown?:string;
     avatarName?:string;
     gender?:string;
-    birthDay?:string;
+    birthDay?:Date;
 }

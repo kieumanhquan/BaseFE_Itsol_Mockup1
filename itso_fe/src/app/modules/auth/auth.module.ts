@@ -8,8 +8,6 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ForgotComponent } from './forgot/forgot.component';
 import { LoginComponent } from './login/login.component';
-import { FormOtpComponent } from './form-otp/form-otp.component';
-import { ChangepassComponent } from './forgot/changepass/changepass.component';
 
 const routes: Routes = [{
   path: '',
@@ -39,6 +37,7 @@ const routes: Routes = [{
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
     ButtonModule,
     InputTextModule,

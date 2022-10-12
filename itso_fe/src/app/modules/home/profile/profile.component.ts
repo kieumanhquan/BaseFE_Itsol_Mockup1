@@ -5,6 +5,8 @@ import { PrimeNGConfig } from 'primeng/api';
 import { SessionService } from '../../../@core/services/session.service';
 import { User } from './profile.model';
 import { ProfileService } from './profile.service';
+import {ToastrService} from "ngx-toastr";
+
 
 @Component({
   selector: 'ngx-profile',
@@ -21,7 +23,10 @@ export class ProfileComponent implements OnInit {
     private sessionService: SessionService,
     private profileService: ProfileService,
     private fb: FormBuilder,
-    private primengConfig: PrimeNGConfig) { }
+    private primengConfig: PrimeNGConfig,
+    private  toastr: ToastrService,
+
+  ) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -30,26 +35,30 @@ export class ProfileComponent implements OnInit {
   }
   initForm(){
     this.formProfile = this.fb.group({
-      fullName: ['', Validators.required],
+      name: ["", Validators.required],
       email: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       birthDay: ['', Validators.required],
       homeTown: ['', Validators.required],
       gender: ['', Validators.required],
+      fullName: ['', Validators.required],
     });
   }
 
   getByUserName(){
     this.username=this.sessionService.getItem('auth-user');
-    this.profileService.getProfile(this.username).subscribe(
+    this.profileService.getProfileByUserName(this.username).subscribe(
       (res)=>{
         this.updateForm(res);
-      },
-    );
+        this.user = res;
+
+
+      });
   }
 
   updateForm(user: User): void {
     this.formProfile.patchValue({
+
       fullName:user.fullName,
       email:user.email,
       phoneNumber:user.phoneNumber,
@@ -57,6 +66,23 @@ export class ProfileComponent implements OnInit {
       homeTown:user.homeTown,
       gender: user.gender,
     });
+
   }
+  onSubmit(){
+      this.updateUser();
+      this.profileService.updateProfile(this.user).subscribe((res:any)=>{
+      this.toastr.success("Update thành công");
+      });
+  }
+  updateUser(){
+    let newUser = this.formProfile.value;
+    this.user.fullName =newUser.fullName;
+    this.user.email = newUser.email;
+    this.user.phoneNumber = newUser.phoneNumber;
+    this.user.birthDay = newUser.birthDay;
+    this.user.homeTown = newUser.homeTown;
+    console.log(newUser);
+  }
+
 
 }

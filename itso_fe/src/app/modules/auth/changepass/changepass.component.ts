@@ -31,9 +31,10 @@ export class ChangepassComponent implements OnInit {
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  get f() {
-    return this.cpc.controls;
-  }
+
+  // get f() {
+  //   return this.cpc.controls;
+  // }
 
   public changePassWord() {
     this.changePassword.change(localStorage.getItem('id'), this.cpc.value.password).subscribe(
