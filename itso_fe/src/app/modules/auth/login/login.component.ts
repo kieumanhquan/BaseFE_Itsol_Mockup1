@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
     private tokenService: TokenService,
     private router: Router,
     private userService: UserService) {
-      console.log('haha');
   }
 
   ngOnInit(): void {

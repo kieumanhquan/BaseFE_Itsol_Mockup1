@@ -11,8 +11,7 @@ export class ProfileService {
   private readonly profileAPI = `${environment.apiUrl}public/user/getuser/`;
 
   constructor(private http: HttpClient) { }
-  
-  getProfile(username: any):Observable<any>{
-    return this.http.get<any>(this.profileAPI + username)
+  getProfile(username: any): Observable<any>{
+    return this.http.get<any>(this.profileAPI + username);
   }
 }
