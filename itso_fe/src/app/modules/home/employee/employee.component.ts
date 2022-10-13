@@ -24,7 +24,7 @@ export class EmployeeComponent implements OnInit {
     config.keyboard = false;
   }
   openLg(content) {
-    this.modalService.open(content, { size: 'lg', centered: true });
+    this.modalService.open(content, { size: 'lg', centered: true,  scrollable: true });
   }
 
   ngOnInit(): void {
