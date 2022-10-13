@@ -41,8 +41,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   openLg(content) {
-    this.modalService.open(content, {size: 'lg', centered: true});
-    this.fillEmp();
+    this.modalService.open(content, { size: 'lg', centered: true,  scrollable: true });
   }
 
   ngOnInit(): void {
