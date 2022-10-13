@@ -1,10 +1,14 @@
 export class User {
-  fullName?:string;
-  email?:string;
-  userName?:string;
-  phoneNumber?:string;
-  homeTown?:string;
-  avatarName?:string;
-  gender?:number;
-  birthDay?:Date;
+  id?: string;
+  fullName?: string;
+  email?: string;
+  userName?: string;
+  phoneNumber?: string;
+  homeTown?: string;
+  cccd: string;
+  gender?: string;
+  birthDay?: Date;
+  position?: string;
+  school?: string;
+  salary?: number;
 }
