@@ -20,5 +20,8 @@ export class ProfileService {
   updateProfile(user: any): Observable<any>{
     return this.http.put<any>(this.putAPI,user);
   }
+  public getUserById(id:any):Observable<any>{
+    return this.http.get<any>( this.putAPI + "/" +id);
+  }
 
 }

@@ -1,3 +1,5 @@
+import {Unit} from "../../../models/model/Unit";
+
 export class User {
   id?: string;
   fullName?: string;
@@ -5,10 +7,11 @@ export class User {
   userName?: string;
   phoneNumber?: string;
   homeTown?: string;
-  cccd: string;
+  cccd?: string;
   gender?: string;
   birthDay?: Date;
   position?: string;
   school?: string;
   salary?: number;
+  unit?:Unit;
 }

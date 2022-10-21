@@ -90,5 +90,8 @@ export class UserService{
     const url = `${this.apiServerUrl}` + 'public/register/'+ `${userName}`;
     return this.http.get<any>(url);
   }
-
+  public getDMByUnit(id: number): Observable<any>{
+    const url = `${this.apiServerUrl}` + 'public/user/find-dm-by-unit/' + `${id}`;
+    return this.http.get<any>(url);
+  }
 }
