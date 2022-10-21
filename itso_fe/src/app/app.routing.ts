@@ -4,7 +4,9 @@ import { NgModule } from '@angular/core';
 
 import { AuthGuard } from './@core/guards/auth.guard';
 import {ForgotComponent} from './modules/auth/forgot/forgot.component';
-import {TransferComponent} from "./modules/home/transfer/transfer.component";
+import {CheckpointComponent} from "./modules/home/checkpoint/checkpoint.component";
+import {TransferComponent} from "./modules/home/transfers/transfer/transfer.component";
+import {TransferUpdateComponent} from "./modules/home/transfers/transfer-update/transfer-update.component";
 
 export const routes: Routes = [
   {
@@ -32,7 +34,12 @@ export const routes: Routes = [
   {
     path:'transfer',
     component: TransferComponent,
-  }
+  },
+  {
+    path:'checkpoint',
+    component: CheckpointComponent,
+  },
+
 ];
 
 const config: ExtraOptions = {

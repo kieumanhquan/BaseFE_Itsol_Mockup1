@@ -7,11 +7,18 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { ProfileComponent } from './profile/profile.component';
 import { SharedModule } from 'primeng/api';
 import { PrimengModule } from '../../shared/primeng.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TransferComponent } from './transfer/transfer.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ContractComponent } from './contract/contract.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { ResetPassComponent } from './reset-pass/reset-pass.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import { CheckpointComponent } from './checkpoint/checkpoint.component';
+import {TransferComponent} from "./transfers/transfer/transfer.component";
+import {TransferUpdateComponent} from "./transfers/transfer-update/transfer-update.component";
+
+
+
 
 
 
@@ -42,6 +49,14 @@ const routes: Routes = [{
     {
       path: 'change-password',
       component: ResetPassComponent,
+    },
+    {
+      path: 'checkpoint',
+      component: CheckpointComponent,
+    },
+    {
+      path: 'update-transfer/:id',
+      component: TransferUpdateComponent,
     }
 
   ],
@@ -56,7 +71,8 @@ const routes: Routes = [{
     ContractComponent,
     EmployeeComponent,
     ResetPassComponent,
-
+    CheckpointComponent,
+    TransferUpdateComponent,
 
   ],
   imports: [
@@ -67,6 +83,9 @@ const routes: Routes = [{
     ReactiveFormsModule,
     PrimengModule,
     SharedModule,
+    MatButtonModule,
+    MatTableModule,
+
   ],
 })
 export class HomeModule { }
