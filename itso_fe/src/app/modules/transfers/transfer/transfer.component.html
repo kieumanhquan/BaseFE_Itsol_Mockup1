@@ -1,0 +1,152 @@
+
+<section>
+  <div class="example-label">Basic</div>
+  <div class="example-button-row">
+    <button mat-button>Basic</button>
+    <button mat-button color="primary">Primary</button>
+    <button mat-button color="accent">Accent</button>
+    <button mat-button color="warn">Warn</button>
+    <button mat-button disabled>Disabled</button>
+    <a mat-button href="https://www.google.com/" target="_blank">Link</a>
+  </div>
+</section>
+<p-card>
+  <div class="row"></div>
+  <div class="row">
+    <div class="col-md-6">
+
+    </div>
+    <div class="col-md-6"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6"></div>
+  </div>
+</p-card>
+
+<p-card [class.mt-2]="$any(true)">
+  <div class="container">
+    <div class="row">
+      <div class="col-9"></div>
+      <div class="col-3">
+        <div>
+          <button class="btn btn-primary " (click)="openLg(content, 28)">Tạo điều đợt điều chuyển</button>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <table class="table table-bordered">
+        <thead>
+        <tr class="bg-light">
+          <th scope="col">Tên điều chuyển</th>
+          <th scope="col">Ngày tạo</th>
+          <th scope="col">Đơn vị cũ</th>
+          <th scope="col">Đơn vị mới</th>
+          <th scope="col">Nhân viên điều chuyển</th>
+          <th scope="col">Người tạo</th>
+          <th scope="col">Status</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of datas ">
+          <td>{{item.transferName}}</td>
+          <td>{{item.createdDate | date: 'dd/MM/yyyy'}}</td>
+          <td>{{item.unitOld.name}}</td>
+          <td>{{item.unitNew.name}}</td>
+          <td>{{item.employee.fullName}}</td>
+          <td>{{item.creator.fullName}}</td>
+          <td>{{item.status ==0 ? "Đang chờ xét duyệt": (item.status == 1 ? "Thành công":"Đã hủy")}}</td>
+          <td><button class="btn btn-outline-info" >Choose</button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</p-card>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" style="color: #3c763d">Thêm mới đợt điều chuyển</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup] = "formTransfer">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label>Tên đợt điều chuyển:</label>
+            <input type="text" class="form-control" formControlName="transferName">
+            <small class="col alert text-danger" role="alert" *ngIf="formTransfer.get('transferName')?.errors?.required && formTransfer.get('transferName')?.touched">
+              Tên đợt điều chuyển không được để trống
+            </small>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Đơn vị mới:</label>
+            <select  class="custom-select mb-3" formControlName="unitNew">
+              <option *ngFor="let unitNew of units" [ngValue]="unitNew" >{{unitNew.name}}</option>
+            </select>
+            <small class="col alert text-danger" role="alert"
+                   *ngIf="formTransfer.get('unitNew')?.errors?.required && formTransfer.get('unitNew')?.touched">
+              Vui lòng chọn đơn vị điều chuyển tới !
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-11">
+          <div class="form-floating">
+            <label for="floatingTextarea2">Lý do điều chuyển:</label>
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="reasonTransfer"></textarea>
+          </div>
+        </div>
+      </div>
+    </form>
+    <hr>
+    <div class="row">
+      <h4>Thông tin nhân viên</h4>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Mã NV</th>
+          <th scope="col">Tên nhân viên</th>
+          <th scope="col">Ngày sinh</th>
+          <th scope="col">Giới tính</th>
+          <th scope="col">Địa chỉ</th>
+          <th scope="col">CCCD</th>
+          <th scope="col">Email</th>
+          <th scope="col">Chức vụ</th>
+          <th scope="col">Đơn vị</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="userTransfer">
+          <td>{{userTransfer.id}}</td>
+          <td>{{userTransfer.fullName}}</td>
+          <td>{{userTransfer.birthDay | date: 'dd/MM/yyyy'}}</td>
+          <td>{{userTransfer.gender}}</td>
+          <td>{{userTransfer.cccd}}</td>
+          <td>{{userTransfer.email}}</td>
+          <td>{{userTransfer.position}}</td>
+          <td>{{userTransfer.position}}</td>
+          <td>{{userTransfer.unit.name}}</td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div>
+      <button type="submit" class="btn btn-warning" (click)="addTransfer()">Hủy bỏ</button>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-success" (click)="onSubmit()">Điều chuyển</button>
+    </div>
+  </div>
+</ng-template>
