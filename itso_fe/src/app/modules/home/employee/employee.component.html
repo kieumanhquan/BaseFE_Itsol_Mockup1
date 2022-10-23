@@ -1,147 +1,348 @@
 <div class="container">
   <div class="row">
-    <div class="col-4">
-      <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Tìm kiếm">
+    <div class="col-12">
+      <form [formGroup]="formSearch">
+        <div class="header">
+          <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm nhân viên</h2>
+        </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label>Họ và tên: </label>
+                <input class="form-control" type="text" formControlName="fullName">
+              </div>
+            </div>
+            <div class="col-6">
+              <label>Email: </label>
+              <input class="form-control" type="text" formControlName="email">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label>Trình độ:</label>
+              <div>
+                <select class="form-control" formControlName="literacy">
+                  <option value="Thạc Sĩ">Thạc sĩ</option>
+                  <option value="Tiến Sĩ">Tiến Sĩ</option>
+                  <option value="Kỹ Sư">Kỹ Sư</option>
+                  <option value="Đại Học">Đại Học</option>
+                  <option value="Cao Đẳng">Cao Đẳng</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-6">
+              <label>Lương:</label>
+              <div>
+                <input class="form-control" type="text" formControlName="salary">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label>Đơn vị: </label>
+              <select id="unit" class="form-control" formControlName="unit">
+                <option *ngFor="let item of datas1" [value]="item.id">{{item.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+        <div class="footer mt-3">
+          <button type="button" class="btn btn-success" type="submit" (click)="onSubmit1()"> Tìm kiếm</button>
+        </div>
+      </form>
     </div>
-    <div class="col-6">
-    </div>
-    <div col-2>
-      <button class="btn btn-primary" (click)="openLg(content)">Thêm mới</button>
-    </div>
-    <div class="row mt-2">
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col">Mã NV</th>
-          <th scope="col">Tên nhân viên</th>
-          <th scope="col">Ngày sinh</th>
-          <th scope="col">Giới tính</th>
-          <th scope="col">Địa chỉ</th>
-          <th scope="col">CCCD</th>
-          <th scope="col">Email</th>
-          <th scope="col">Chức vụ</th>
-          <th scope="col">Trường</th>
-          <th scope="col">Lương</th>
-          <th colspan="2" style="text-align: center">
-            Thao tác
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of datas">
-          <td>{{item.id}}</td>
-          <td>{{item.fullName}}</td>
-          <td>{{item.birthDay | date: 'dd/MM/yyyy'}}</td>
-          <td>{{item.gender}}</td>
-          <td>{{item.homeTown}}</td>
-          <td>{{item.cccd}}</td>
-          <td>{{item.email}}</td>
-          <td>{{item.position}}</td>
-          <td>{{item.school}}</td>
-          <td>{{item.salary}}</td>
-          <td>
-            <span class="btn btn-success mr-2" (click)="openLg(content)">View</span>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    <div class="row mt-2 ml-0">
+      <div class="row mt-2 ml-3">
+        <div class="col-11 text-center">
+          <button class="btn btn-primary mb-3" style="float: right;" (click)="openLg(content)">Thêm mới</button>
+        </div>
+        <table class="table table-responsive table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center" scope="col">Mã NV</th>
+              <th class="text-center" scope="col">Tên nhân viên</th>
+              <th class="text-center" scope="col">Email</th>
+              <th class="text-center" scope="col">SDT</th>
+              <th class="text-center" scope="col">Lương</th>
+              <th class="text-center" scope="col">Giới tính</th>
+              <th class="text-center" scope="col">Chức vụ</th>
+              <th class="text-center" scope="col">Ngày sinh</th>
+              <th class="text-center" scope="col">Trạng thái</th>
+              <th class="text-center" scope="col">Đơn vị làm việc</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="datas">
+            <tr *ngFor="let item of datas" (click)="infoUser(item.id)">
+              <td>{{item.id}}</td>
+              <td>{{item.fullName}}</td>
+              <td>{{item.email}}</td>
+              <td>{{item.phoneNumber}}</td>
+              <td>{{item.salary}}</td>
+              <td>{{item.gender}}</td>
+              <td>{{item.position}}</td>
+              <td>{{item.birthDay}}</td>
+              <td *ngIf="item.active">Activated</td>
+              <td *ngIf="!item.active">Deactivated</td>
+              <td *ngIf="item.unit">{{item.unit.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
-</div>
+  <div class="col d-flex justify-content-center">
+    <nav class="pt-3 ">
+      <ul class="pagination justify-content-end">
+        <li class="page-item " [ngClass]="indexPage === 0?'disabled':''">
+          <a class="page-link" (click)="preNextPage('pre')">Previous</a>
+        </li>
 
-<form [formGroup]="emp">
-  <ng-template #content let-modal>
-    <div class="modal-header">
-      <h2 class="modal-title" style="color: #3c763d">Thêm mới nhân viên</h2>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>FullName:</label>
-            <input type="text" class="form-control" formControlName="fullName">
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Gender:</label>
-              <select class="form-control" formControlName="gender">
-                <option  value="Nam">Nam</option>
-                <option  value="Nữ">Nữ</option>
-                <option  value="Khác">Khác</option>
-              </select>
-          </div>
-        </div>
+        <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index" class="page-item"
+          [ngClass]="indexPage === i?'active':''">
+          <a class="page-link" (click)="pagination(i)">{{i + 1}}</a>
+        </li>
+
+        <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">
+          <a class="page-link" (click)="preNextPage('next')"> Next </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <form novalidate (ngSubmit)="onSubmit()" [formGroup]="formEmp">
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Thêm mới nhân viên</h2>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Birthday:</label>
-            <input type="date" class="form-control" formControlName="birthDay">
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-6">
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Họ và tên: </label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="fullName">
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('fullName')?.errors?.required && formEmp.get('fullName')?.touched">
+                  Họ và tên không được để trống !
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Email: </label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="email">
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('email')?.errors?.required && formEmp.get('email')?.touched">
+                  Email không được để trống !
+                </small>
+
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('email')?.errors?.email && formEmp.get('email')?.touched">
+                  Định dạng email chưa đúng !
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Tên người dùng: </label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="userName">
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('userName')?.errors?.required && formEmp.get('userName')?.touched">
+                  Tên người dùng không được để trống !
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Mật khẩu:</label>
+              <div class="col-md-10">
+                <input class="form-control" type="password" formControlName="password" placeholder="Ex. 123@aaAA12">
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('password')?.errors?.required && formEmp.get('password')?.touched">
+                  Mật khẩu không được để trống !
+                </small>
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('password')?.errors?.pattern && formEmp.get('password')?.touched">
+                  Mật khẩu phải có 8 ký tự trở lên, bao gồm cả chữ, cả số và cả kí tự đặc biệt !
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">CCCD:</label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="cccd">
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('cccd')?.errors?.required && formEmp.get('cccd')?.touched">
+                  CCCD không được để trống !
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Trình độ:</label>
+              <div class="col-md-10">
+                <select class="form-control" formControlName="literacy">
+                  <option value="Thạc Sĩ">Thạc sĩ</option>
+                  <option value="Tiến Sĩ">Tiến Sĩ</option>
+                  <option value="Kỹ Sư">Kỹ Sư</option>
+                  <option value="Đại Học">Đại Học</option>
+                  <option value="Cao Đẳng">Cao Đẳng</option>
+                </select>
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('literacy')?.errors?.required && formEmp.get('literacy')?.touched">
+                  Trình độ chưa được chọn!
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">SDT: </label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="phoneNumber">
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('phoneNumber')?.errors?.required && formEmp.get('phoneNumber')?.touched">
+                  Số điện thoại không được để trống !
+                </small>
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('phoneNumber')?.errors?.pattern && formEmp.get('phoneNumber')?.touched">
+                  Định dạng số điện thoại chưa đúng !
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Quê quán: </label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="homeTown">
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('homeTown')?.errors?.required && formEmp.get('homeTown')?.touched">
+                  Quê quán không được để trống !
+                </small>
+              </div>
+            </div>
+
           </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>HomeTown:</label>
-            <input type="text" pInputText class="form-control" formControlName="homeTown">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>UserName:</label>
-            <input type="email" class="form-control" formControlName="userName">
-            <small *ngIf="emp.get('userName')?.errors?.required && emp.get('userName')?.touched">
-              Email không được để trống !
-            </small>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Phone Number:</label>
-            <input type="text" class="form-control" formControlName="phoneNumber">
+          <div class="col-6">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Lương:</label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="salary">
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('salary')?.errors?.required && formEmp.get('salary')?.touched">
+                  Lương không được để trống !
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Giới tính:</label>
+              <div class="col-md-10 mt-2 ">
+                <select id="gender" class="form-control" formControlName="gender">
+                  <option value="Nam">Nam</option>
+                  <option value="Nữ">Nữ</option>
+                  <option value="Khác">Khác</option>
+                </select>
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('gender')?.errors?.required && formEmp.get('gender')?.touched">
+                  Giới tính chưa được chọn !
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Chức vụ:</label>
+              <div class="col-md-10">
+                <select id="position" class="form-control" formControlName="position">
+                  <option value="Intern">Intern</option>
+                  <option value="Dev">Dev</option>
+                  <option value="Tester">Tester</option>
+                  <option value="Leader">Leader</option>
+                  <option value="PM">PM</option>
+                  <option value="DM">DM</option>
+                  <option value="HR">HR</option>
+                </select>
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('position')?.errors?.required && formEmp.get('position')?.touched">
+                  Chức vụ chưa được chọn !
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Ngày sinh: </label>
+              <div class="col-md-10">
+                <input class="form-control" type="date" formControlName="birthDay">
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formEmp.get('birthDay')?.errors?.required && formEmp.get('birthDay')?.touched">
+                  Ngày sinh không được để trống !
+                </small>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Trạng thái: </label>
+              <div class="col-md-10 mt-2">
+                <div>
+                  <select id="isActive" class="form-control" formControlName="isActive">
+                    <option [disabled]="check()" value="Active">Activated</option>
+                    <option value="NotActive">Deactivated</option>
+                  </select>
+                  <small class="col alert text-danger" role="alert"
+                    *ngIf="formEmp.get('isActive')?.errors?.required && formEmp.get('isActive')?.touched">
+                    Trạng thái chưa được chọn !
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Trưởng đơn vị: </label>
+              <div class="col-md-10 mt-2">
+                <div>
+                  <select id="isLeader" class="form-control" formControlName="isLeader">
+                    <option [disabled]="check() " value="Lead">True</option>
+                    <option value="Notlead">False</option>
+                  </select>
+                  <small class="col alert text-danger" role="alert"
+                    *ngIf="formEmp.get('isLeader')?.errors?.required && formEmp.get('isLeader')?.touched">
+                    Trưởng đơn vị chưa được chọn !
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">Đơn vị: </label>
+              <div class="col-md-10 mt-2">
+                <div>
+                  <select id="unit" class="form-control" formControlName="unit">
+                    <option *ngFor="let item of datas1" [value]="item.id"
+                      [disabled]="(item.id===3? true:false) && checkHr()">{{item.name}}
+                    </option>
+                  </select>
+
+                  <small class="col alert text-danger" role="alert"
+                    *ngIf="formEmp.get('unit')?.errors?.required && formEmp.get('unit')?.touched">
+                    Đơn vị chưa được chọn !
+                  </small>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Position:</label>
-            <select class="form-control">
-              <option>Intern</option>
-              <option>Developer</option>
-              <option>Tester</option>
-              <option>Leader</option>
-              <option>PM</option>
-              <option>DM</option>
-              <option>HR</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Salary:</label>
-            <input type="text" pInputText class="form-control" formControlName="salary">
-          </div>
+      <div class="modal-footer">
+        <div>
+          <button type="button" class="btn btn-success" type="submit" (click)="addEmployee()">Thêm mới</button>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>School:</label>
-            <input type="text" pInputText class="form-control" formControlName="school">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <div>
-        <button type="button" class="btn btn-success" (click)="addEmployee()">Thêm mới</button>
-      </div>
-    </div>
-  </ng-template>
-</form>
+    </ng-template>
+  </form>

@@ -5,7 +5,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { SessionService } from '../../../@core/services/session.service';
 import { User } from './profile.model';
 import { ProfileService } from './profile.service';
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
   }
   initForm(){
     this.formProfile = this.fb.group({
-      name: ["", Validators.required],
+      name: ['', Validators.required],
       email: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       birthDay: ['', Validators.required],
@@ -70,12 +70,12 @@ export class ProfileComponent implements OnInit {
   }
   onSubmit(){
       this.updateUser();
-      this.profileService.updateProfile(this.user).subscribe((res:any)=>{
-      this.toastr.success("Update thành công");
+      this.profileService.updateProfile(this.user).subscribe((res: any)=>{
+      this.toastr.success('Update thành công');
       });
   }
   updateUser(){
-    let newUser = this.formProfile.value;
+    const newUser = this.formProfile.value;
     this.user.fullName =newUser.fullName;
     this.user.email = newUser.email;
     this.user.phoneNumber = newUser.phoneNumber;

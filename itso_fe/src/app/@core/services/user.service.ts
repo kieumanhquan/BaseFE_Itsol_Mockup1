@@ -10,51 +10,44 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 
-export class UserService{
+export class UserService {
 
+  private apiServerUrl = environment.apiUrl;
 
-  // private apiServerUrl = environment.apiUrl;
-
-  // constructor(private http: HttpClient) {
-  // }
+  constructor(private http: HttpClient) {
+  }
 
   getDecodedAccessToken(): any {
     const token = localStorage.getItem('auth-token');
     try {
       return jwt_decode(token);
-    } catch(Error) {
+    } catch (Error) {
       return null;
     }
   }
 
   public getUserByUserName(userName: string): Observable<User> {
-    return this.http.get<any>(`${this.apiServerUrl}`+'public/user/username='+userName).pipe(
-      tap(user => console.log(localStorage.setItem('user',JSON.stringify(user)))),
+    return this.http.get<any>(`${this.apiServerUrl}` + 'public/user/username=' + userName).pipe(
+      tap(user => console.log(localStorage.setItem('user', JSON.stringify(user)))),
     );
   }
 
 
   public getJe(): Observable<any[]> {
-    return this.http.get<any>(`${this.apiServerUrl}`+'public/user/role=2').pipe(
+    return this.http.get<any>(`${this.apiServerUrl}` + 'public/user/role=2').pipe(
       tap(jobPositions => console.log(`academicLevels=${JSON.stringify(jobPositions)}`)),
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  private apiServerUrl = environment.apiUrl;
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  constructor(private http: HttpClient){
-  }
-
-  public getUser(): Observable<User[]>{
+  public getUser(): Observable<User[]> {
     return this.http.get<any>(`${this.apiServerUrl}public/user`);
     // .pipe(
     //   tap(user => console.log(`receiveduser=${JSON.stringify(user)}`)),
     // );
   }
 
-  public getTotalRecords(){
+  public getTotalRecords() {
     let totals: number;
     this.getUser().subscribe((data: any[]) => {
       totals = data.length;
@@ -62,32 +55,32 @@ export class UserService{
     return totals;
   }
 
-  public search(s: any): Observable<User[]>{
-    return this.http.post<any>(`${this.apiServerUrl}public/user/search`,s);
+  public search(search: any): Observable<User[]> {
+    return this.http.post<any>(`${this.apiServerUrl}public/user/search`, search);
   }
-  public getUserById(id: number): Observable<User>{
+  public getUserById(id: any): Observable<User> {
     const url = `${this.apiServerUrl}` + 'public/user/' + `${id}`;
     return this.http.get<User>(url);
   }
 
-  public active(item: string): Observable<any>{
+  public active(item: string): Observable<any> {
     const url = `${this.apiServerUrl}` + 'public/user/active';
-    return this.http.put<any>(url,item);
+    return this.http.put<any>(url, item);
   }
 
-  public addUser(user: any): Observable<any>{
+  public addUser(user: any): Observable<any> {
     const url = `${this.apiServerUrl}` + 'public/user/add';
-    return this.http.post(url,user);
+    return this.http.post(url, user);
   }
 
-  public register(user: any): Observable<any>{
+  public register(user: any): Observable<any> {
     console.log(user);
     const url = `${this.apiServerUrl}` + 'public/register';
-    return this.http.post(url,user);
+    return this.http.post(url, user);
   }
 
-  public activeAccount(userName): Observable<any>{
-    const url = `${this.apiServerUrl}` + 'public/register/'+ `${userName}`;
+  public activeAccount(userName): Observable<any> {
+    const url = `${this.apiServerUrl}` + 'public/register/' + `${userName}`;
     return this.http.get<any>(url);
   }
 
