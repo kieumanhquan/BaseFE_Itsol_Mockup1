@@ -1,17 +1,59 @@
-import {Unit} from "../../../models/model/Unit";
-
 export class User {
   id?: string;
   fullName?: string;
   email?: string;
   userName?: string;
+  password?: string;
+  cccd?: string;
+  literacy?: string;
   phoneNumber?: string;
   homeTown?: string;
-  cccd?: string;
-  gender?: string;
-  birthDay?: Date;
-  position?: string;
-  school?: string;
+  avatarName?: string;
   salary?: number;
-  unit?:Unit;
+  gender?: string;
+  position?: string;
+  leader?: boolean;
+  birthDay?: Date;
+  delete?: boolean;
+  active?: boolean;
+  school?: string;
+  unit?: Unit;
 }
+
+export interface Unit {
+  id?: number;
+  name?: string;
+  status?: boolean;
+}
+
+export interface Transfer{
+  id?: number;
+  transferName?: string;
+  reasonTransfer?: string;
+  createdDate?: Date;
+  reasonNew?: string;
+  reasonOld?: string;
+  isStatusNew?: number;
+  isStatusOld?: number;
+  isDelete?: number;
+  unitNew?: Unit;
+  unitOld?: Unit;
+  employee?: User;
+  creator?: User;
+  transferDate?: Date;
+  status?: number;
+
+}
+
+export interface UserDTO {
+  name?: string;
+  email?: string;
+  literacy?: string;
+  position?: string;
+  salary?: number;
+  birthDay?: Date;
+  unit?: Unit;
+}
+
+
+

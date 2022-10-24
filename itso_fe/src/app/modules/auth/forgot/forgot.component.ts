@@ -5,10 +5,6 @@ import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {AuthService} from '../../../@core/services/auth.service';
 import {Router} from '@angular/router';
 
-export interface User{
-  email?: string;
-  otp?: number;
-}
 @Component({
   selector: 'ngx-forgot',
   templateUrl: './forgot.component.html',

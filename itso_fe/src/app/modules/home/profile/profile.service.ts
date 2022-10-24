@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProfileService {
 
@@ -15,13 +15,13 @@ export class ProfileService {
   }
 
   getProfileByUserName(username: any): Observable<any> {
-    return this.http.get<any>(this.profileAPI + username)
+    return this.http.get<any>(this.profileAPI + username);
   }
   updateProfile(user: any): Observable<any>{
     return this.http.put<any>(this.putAPI,user);
   }
-  public getUserById(id:any):Observable<any>{
-    return this.http.get<any>( this.putAPI + "/" +id);
+  public getUserById(id: any): Observable<any>{
+    return this.http.get<any>( this.putAPI + '/' +id);
   }
 
 }

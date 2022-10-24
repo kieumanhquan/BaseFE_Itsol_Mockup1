@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/member-ordering */
   import {Component, OnInit, ViewChild} from '@angular/core';
-  import {MatTableDataSource} from "@angular/material/table";
-  import {MatPaginator} from "@angular/material/paginator";
+  import {MatTableDataSource} from '@angular/material/table';
+  import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'ngx-contract',
   templateUrl: './contract.component.html',
-  styleUrls: ['./contract.component.scss']
+  styleUrls: ['./contract.component.scss'],
 })
 export class ContractComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
@@ -13,6 +14,7 @@ export class ContractComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }

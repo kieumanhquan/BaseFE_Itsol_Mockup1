@@ -1,32 +1,30 @@
 import {Component, OnInit} from '@angular/core';
-import {Transfer} from "../../../../models/model/Transfer";
-import {TransferService} from "../../../../services/TransferService";
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../../../@core/services/user.service";
-import {ProfileService} from "../../profile/profile.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UnitService} from "../../../../services/UnitService";
-import {Unit} from "../../../../models/model/Unit";
-import {User} from "../../employee/employee.model";
-import {SessionService} from "../../../../@core/services/session.service";
-import {ToastrService} from "ngx-toastr";
+import {TransferService} from '../../../../services/TransferService';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from '../../../../@core/services/user.service';
+import {ProfileService} from '../../profile/profile.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UnitService} from '../../../../services/UnitService';
+import {Transfer, Unit, User} from '../../employee/employee.model';
+import {SessionService} from '../../../../@core/services/session.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'ngx-transfer-update',
   templateUrl: './transfer-update.component.html',
-  styleUrls: ['./transfer-update.component.scss']
+  styleUrls: ['./transfer-update.component.scss'],
 })
 export class TransferUpdateComponent implements OnInit {
   transfer: Transfer;
   idTransfer: number;
   userLogin: User;
-  userCreator:any;
+  userCreator: any;
   formTransfer: FormGroup;
   units: Unit[];
   userTransfer: User;
   dmUnitOld: User;
   dmUnitNew: User;
-  cancleReview: boolean = false;
+  cancleReview = false;
   userName: string;
 
 
@@ -44,10 +42,10 @@ export class TransferUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initForm()
+    this.initForm();
     // transfer click
     this.activated.paramMap.subscribe(params => {
-      this.idTransfer = parseInt(params.get('id'));
+      this.idTransfer = parseInt(params.get('id'), 10);
       if (this.idTransfer != null) {
         this.transferService.getTransferById(this.idTransfer).subscribe(res => {
           this.transfer = res;
@@ -57,13 +55,15 @@ export class TransferUpdateComponent implements OnInit {
           this.userCreator = res.creator;
           this.isCancelReview();
           //lay dmunitOld
+          // eslint-disable-next-line @typescript-eslint/no-shadow
           this.userService.getDMByUnit(this.transfer.unitOld.id).subscribe(res=>{
             this.dmUnitOld = res;
           });
           // lay ra dm unit new
+          // eslint-disable-next-line @typescript-eslint/no-shadow
           this.userService.getDMByUnit(this.transfer.unitNew.id).subscribe(res=>{
             this.dmUnitOld = res;
-          })
+          });
           //
           this.updateForm();
           //
@@ -82,7 +82,7 @@ export class TransferUpdateComponent implements OnInit {
     //mang unit
       this.unitService.findAllUnit().subscribe(res=>{
         this.units = res;
-      })
+      });
     //init form
 
     //update form
@@ -93,7 +93,7 @@ export class TransferUpdateComponent implements OnInit {
   }
   initForm() {
     this.formTransfer = this.fb.group({
-      transferName: ["", [Validators.required, Validators.maxLength(200)]],
+      transferName: ['', [Validators.required, Validators.maxLength(200)]],
       unitNew: ['', Validators.required],
       reasonTransfer: ['', [Validators.required, Validators.maxLength(200)]],
     });
@@ -103,7 +103,7 @@ export class TransferUpdateComponent implements OnInit {
       transferName:this.transfer.transferName,
       unitNew:this.transfer.unitNew,
       reasonTransfer:this.transfer.reasonTransfer,
-    })
+    });
   }
   isCancelReview(){
     if(this.transfer.status > 1){
@@ -111,7 +111,7 @@ export class TransferUpdateComponent implements OnInit {
       return;
     }
     const jwtDecode = this.userService.getDecodedAccessToken();
-    let role = jwtDecode.auth.split(',');
+    const role = jwtDecode.auth.split(',');
     // admin
     console.log('kkkkk');
     if (role.includes('ROLE_ADMIN')) {
@@ -119,18 +119,18 @@ export class TransferUpdateComponent implements OnInit {
       console.log(this.cancleReview);
       return;
     }
-    if(this.transfer.isStatusOld == 0 && this.transfer.status ==0){
-      this.cancleReview = (this.dmUnitOld.id == this.userLogin.id);
+    if(this.transfer.isStatusOld === 0 && this.transfer.status ===0){
+      this.cancleReview = (this.dmUnitOld.id === this.userLogin.id);
       return;
     }
-    if(this.transfer.isStatusNew == 0 && this.transfer.status ==1){
-      this.cancleReview = (this.dmUnitNew.id == this.userLogin.id);
+    if(this.transfer.isStatusNew === 0 && this.transfer.status ===1){
+      this.cancleReview = (this.dmUnitNew.id === this.userLogin.id);
     }
   }
   //đoc du lieu tu form
   updateFormV2(){
-    let formValue = this.formTransfer.value;
-    console.log(formValue.transferName)
+    const formValue = this.formTransfer.value;
+    console.log(formValue.transferName);
     this.transfer.transferName = formValue.transferName;
     this.transfer.reasonTransfer = formValue.reasonTransfer;
     this.transfer.unitNew = formValue.unitNew;
@@ -139,19 +139,19 @@ export class TransferUpdateComponent implements OnInit {
   submit(){
     this.updateFormV2();
     this.transferService.updateTransger(this.transfer).subscribe(res=>{
-      this.toastr.success('Cập nhật thành công')
+      this.toastr.success('Cập nhật thành công');
     }, error => {
-      this.toastr.error('Cập nhật thất bại')
+      this.toastr.error('Cập nhật thất bại');
     });
   }
   refuse(){
-    if(this.transfer.status == 0 && this.transfer.isStatusOld == 0){
+    if(this.transfer.status === 0 && this.transfer.isStatusOld === 0){
       this.transfer.status = 2;
       this.transfer.isStatusOld = 2;
       this.update(this.transfer);
       return;
     }
-    if(this.transfer.status == 1 && this.transfer.isStatusOld ==1){
+    if(this.transfer.status === 1 && this.transfer.isStatusOld ===1){
       this.transfer.status = 2;
       this.transfer.isStatusNew = 2;
       this.update(this.transfer);
@@ -160,13 +160,13 @@ export class TransferUpdateComponent implements OnInit {
 
   }
   confirm(){
-    if(this.transfer.status == 0 && this.transfer.isStatusOld == 0){
+    if(this.transfer.status === 0 && this.transfer.isStatusOld === 0){
       this.transfer.status =1;
       this.transfer.isStatusOld =1;
       this.update(this.transfer);
       return;
     }
-    if(this.transfer.status == 1 && this.transfer.isStatusOld == 1){
+    if(this.transfer.status === 1 && this.transfer.isStatusOld === 1){
       this.transfer.status = 4;
       this.transfer.isStatusNew =1;
       this.transfer.transferDate = new Date();
@@ -178,17 +178,17 @@ export class TransferUpdateComponent implements OnInit {
   cancel(){
     this.transfer.status = 3;
     this.transferService.updateTransger(this.transfer).subscribe(res=>{
-      this.toastr.success('Hủy thành công')
+      this.toastr.success('Hủy thành công');
     }, error => {
-      this.toastr.error("Thất bại")
+      this.toastr.error('Thất bại');
     });
 
   }
   update(transfer: Transfer){
     this.transferService.updateTransger(transfer).subscribe(res=>{
-      this.toastr.success('Cập nhật thành công')
+      this.toastr.success('Cập nhật thành công');
     }, error => {
-      this.toastr.error("Thất bại")
+      this.toastr.error('Thất bại');
     });
   }
 

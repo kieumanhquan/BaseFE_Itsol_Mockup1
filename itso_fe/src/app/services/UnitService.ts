@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,10 +11,10 @@ export  class UnitService{
 
   constructor(private http: HttpClient) {
   }
-  public findUnitNotJoinUser(id:any): Observable<any> {
+  public findUnitNotJoinUser(id: any): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrlPrivate}`+'public/unit/not-join-user/'+id);
   }
-  public findAllUnit():Observable<any>{
+  public findAllUnit(): Observable<any>{
     return this.http.get<any>(`${this.apiServerUrlPrivate}`+'public/unit');
   }
 }

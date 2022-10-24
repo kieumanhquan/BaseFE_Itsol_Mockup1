@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { 
-  NbInputModule,
+import { NbInputModule,
   NbButtonModule,
   NbCardModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable'
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -17,16 +16,16 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable'
       messages: {
         emptyMessage: 'No data to display', // Message to show when array is presented, but contains no values
         totalMessage: 'total', // Footer total message
-        selectedMessage: 'selected' // Footer selected message
-      }
-    })
+        selectedMessage: 'selected', // Footer selected message
+      },
+    }),
   ],
   exports: [
     NbInputModule,
     NbButtonModule,
     NbCardModule,
-    NbSelectModule
-  ]
+    NbSelectModule,
+  ],
 
 })
 export class SharedModule { }

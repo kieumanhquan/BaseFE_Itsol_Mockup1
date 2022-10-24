@@ -1,30 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import {TransferService} from "../../../../services/TransferService";
-import {User} from "../../employee/employee.model";
-import {Transfer} from "../../../../models/model/Transfer";
-import {HttpErrorResponse} from "@angular/common/http";
-import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
-import {ToastrService} from "ngx-toastr";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {Unit} from "../../../../models/model/Unit";
-import {UnitService} from "../../../../services/UnitService";
-import {SessionService} from "../../../../@core/services/session.service";
-import {ProfileService} from "../../profile/profile.service";
-import {UserService} from "../../../../@core/services/user.service";
-import {Observable} from "rxjs";
+import { TransferService } from '../../../../services/TransferService';
+import { Transfer, Unit, User } from '../../employee/employee.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UnitService } from '../../../../services/UnitService';
+import { SessionService } from '../../../../@core/services/session.service';
+import { ProfileService } from '../../profile/profile.service';
+import { UserService } from '../../../../@core/services/user.service';
 
 @Component({
   selector: 'ngx-transfer',
   templateUrl: './transfer.component.html',
-  styleUrls: ['./transfer.component.scss']
+  styleUrls: ['./transfer.component.scss'],
 })
 export class TransferComponent implements OnInit {
   datas: Transfer[] = [];
   units: Unit[];
   transfer: Transfer = {};
-  formTransfer : FormGroup;
-  formUpdateTransfer : FormGroup;
+  formTransfer: FormGroup;
+  formUpdateTransfer: FormGroup;
   userTransfer: User;
   creator: User;
   username: string;
@@ -34,7 +31,7 @@ export class TransferComponent implements OnInit {
   id: any;
   isCheck: boolean;
   constructor(
-    private transferService:TransferService,
+    private transferService: TransferService,
     private unitService: UnitService,
     private userService: UserService,
     private modalService: NgbModal,
@@ -46,24 +43,24 @@ export class TransferComponent implements OnInit {
     config: NgbModalConfig,
   ) { }
   //open modal create
-  openLg(content, id:any) {
+  openLg(content, id: any) {
     this.getUserById(id);
     this.findUnitNotJoinUser(id);
-    this.modalService.open(content, { size: 'lg', centered: true,  scrollable: true });
+    this.modalService.open(content, { size: 'lg', centered: true, scrollable: true });
   }
   //open modal edit
-  openLd(content, item:any) {
+  openLd(content, item: any) {
     // console.log(item);
     this.userTransfer = item.employee;
     this.transfer = item;
     this.findUnitNotJoinUser(item.employee.id);
     this.userService.getDMByUnit(this.transfer.unitOld.id).subscribe(
-      (res)=>{
+      (res) => {
         this.dmUnitOld = res;
         console.log(this.dmUnitOld);
       });
     this.userService.getDMByUnit(this.transfer.unitNew.id).subscribe(
-      (res)=>{
+      (res) => {
         this.dmUnitNew = res;
         console.log(this.dmUnitNew);
       });
@@ -72,7 +69,7 @@ export class TransferComponent implements OnInit {
 
 
     this.updateForm();
-    this.modalService.open(content, { size: 'lg', centered: true,  scrollable: true });
+    this.modalService.open(content, { size: 'lg', centered: true, scrollable: true });
   }
 
   ngOnInit(): void {
@@ -85,7 +82,7 @@ export class TransferComponent implements OnInit {
 
 
 
-  public getAllTransfer(){
+  public getAllTransfer() {
     this.transferService.getAll().subscribe(
       (data: any) => {
         this.datas = data;
@@ -96,7 +93,7 @@ export class TransferComponent implements OnInit {
       },
     );
   }
-  public findUnitNotJoinUser(id:any){
+  public findUnitNotJoinUser(id: any) {
     this.unitService.findUnitNotJoinUser(id).subscribe(
       (data: any) => {
         this.units = data;
@@ -108,36 +105,36 @@ export class TransferComponent implements OnInit {
     );
   }
 
-  getUserById(id: number){
+  getUserById(id: number) {
     this.profileService.getUserById(id).subscribe(
-      (res)=>{
+      (res) => {
         this.userTransfer = res;
         this.unitOld = this.userTransfer.unit;
         console.log(this.unitOld);
         console.log(this.userTransfer);
       });
   }
-  getByUserName(){
-    this.username=this.sessionService.getItem('auth-user');
+  getByUserName() {
+    this.username = this.sessionService.getItem('auth-user');
     this.profileService.getProfileByUserName(this.username).subscribe(
-      (res)=>{
+      (res) => {
         this.creator = res;
         console.log(this.creator);
       });
   }
-  onSubmit(){
-    alert("lưu");
+  onSubmit() {
     this.addTransfer();
-    this.transferService.createTransger(this.transfer).subscribe(res=>{
-      this.toastr.success('Thêm mới thành công')
+    this.transferService.createTransfer(this.transfer).subscribe(res => {
+      this.toastr.success('Thêm mới thành công');
+      this.modalService.dismissAll();
+      this.router.navigate(['home/transfer']);
     }, error => {
-      this.toastr.error(error.message())
+      this.toastr.error(error.message());
     });
-    this.modalService.dismissAll();
   }
-  addTransfer(){
-    let formValue = this.formTransfer.value;
-    console.log(formValue.transferName)
+  addTransfer() {
+    const formValue = this.formTransfer.value;
+    console.log(formValue.transferName);
     this.transfer.transferName = formValue.transferName;
     this.transfer.reasonTransfer = formValue.reasonTransfer;
     this.transfer.unitNew = formValue.unitNew;
@@ -149,26 +146,26 @@ export class TransferComponent implements OnInit {
   }
   initForm() {
     this.formTransfer = this.fb.group({
-      transferName: ["", [Validators.required, Validators.maxLength(200)]],
+      transferName: ['', [Validators.required, Validators.maxLength(200)]],
       unitNew: ['', Validators.required],
       reasonTransfer: ['', [Validators.required, Validators.maxLength(200)]],
     });
   }
-  updateForm(){
-        this.formTransfer.patchValue({
-          transferName:this.transfer.transferName,
-          unitNew:this.transfer.unitNew,
-          reasonTransfer:this.transfer.reasonTransfer,
-        })
+  updateForm() {
+    this.formTransfer.patchValue({
+      transferName: this.transfer.transferName,
+      unitNew: this.transfer.unitNew,
+      reasonTransfer: this.transfer.reasonTransfer,
+    });
   }
-  isReview(){
-    if(this.transfer.status > 4){
+  isReview() {
+    if (this.transfer.status > 4) {
       this.isCheck = false;
       return;
     }
     const jwt = this.userService.getDecodedAccessToken();
-    let role = jwt.auth.split(',');
-    if(role.includes('ROLE_ADMIN')){
+    const role = jwt.auth.split(',');
+    if (role.includes('ROLE_ADMIN')) {
       this.isCheck = true;
       return this.isCheck;
     }
@@ -182,61 +179,59 @@ export class TransferComponent implements OnInit {
     // }
 
   }
-  getByDmByUnitId(id:any){
+  getByDmByUnitId(id: any) {
     this.userService.getDMByUnit(id).subscribe(
-      (res)=>{
+      (res) => {
         this.creator = res;
         console.log(this.creator);
       });
   }
-  checkConFirmTranfer(){
-    if(this.transfer.isStatusOld == null){
+  checkConFirmTranfer() {
+    if (this.transfer.isStatusOld == null) {
       this.transfer.status = 2;
-    }else{
+    } else {
       this.transfer.status = 1;
     }
   }
-  checkRefuseTranfer(){
+  checkRefuseTranfer() {
     const jwt = this.userService.getDecodedAccessToken();
-    let role = jwt.auth.split(',');
-    if(role.includes('ROLE_ADMIN')){
+    const role = jwt.auth.split(',');
+    if (role.includes('ROLE_ADMIN')) {
       this.transfer.status = 5;
-    }
-    else if(this.transfer.isStatusOld == null){
+    } else if (this.transfer.isStatusOld == null) {
       this.transfer.status = 5;
       this.transfer.isStatusOld = 1;
-    }
-    else if(this.transfer.isStatusNew == null){
+    } else if (this.transfer.isStatusNew == null) {
       this.transfer.status = 5;
       this.transfer.isStatusNew = 1;
     }
   }
-  updateTransfer(){
+  updateTransfer() {
 
   }
-  deleteTransfer(){
+  deleteTransfer() {
 
   }
-  confirmTransfer(){
+  confirmTransfer() {
     this.checkConFirmTranfer();
-    this.transferService.updateTransger(this.transfer).subscribe(res=>{
-      this.toastr.success('Cập nhật thành công')
+    this.transferService.updateTransger(this.transfer).subscribe(res => {
+      this.toastr.success('Cập nhật thành công');
     }, error => {
-      this.toastr.error(error.message())
+      this.toastr.error(error.message());
     });
   }
-  refuseTransfer(){
+  refuseTransfer() {
     this.checkRefuseTranfer();
-    this.transferService.updateTransger(this.transfer).subscribe(res=>{
-      this.toastr.success('Cập nhật thành công')
+    this.transferService.updateTransger(this.transfer).subscribe(res => {
+      this.toastr.success('Cập nhật thành công');
     }, error => {
-      this.toastr.error(error.message())
+      this.toastr.error(error.message());
     });
   }
   //Phân trang
 
   //chuyển trang
-  sentoUpdate(id:number){
+  sentoUpdate(id: number) {
     const url = '/home/update-transfer/' + id;
     this.router.navigate([url]);
   }

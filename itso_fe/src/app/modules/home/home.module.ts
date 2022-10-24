@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NbMenuModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { ProfileComponent } from './profile/profile.component';
+import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'primeng/api';
 import { PrimengModule } from '../../shared/primeng.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -14,12 +15,9 @@ import { ResetPassComponent } from './reset-pass/reset-pass.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import { CheckpointComponent } from './checkpoint/checkpoint.component';
-import {TransferComponent} from "./transfers/transfer/transfer.component";
-import {TransferUpdateComponent} from "./transfers/transfer-update/transfer-update.component";
-
-
-
-
+import {TransferComponent} from './transfers/transfer/transfer.component';
+import {TransferUpdateComponent} from './transfers/transfer-update/transfer-update.component';
+import {UpdateEmployeeComponent} from './employee/update-employee/update-employee.component';
 
 
 const routes: Routes = [{
@@ -51,14 +49,17 @@ const routes: Routes = [{
       component: ResetPassComponent,
     },
     {
+      path: 'edit/:id',
+      component: UpdateEmployeeComponent,
+    },
+    {
       path: 'checkpoint',
       component: CheckpointComponent,
     },
     {
       path: 'update-transfer/:id',
       component: TransferUpdateComponent,
-    }
-
+    },
   ],
 }];
 
@@ -71,14 +72,15 @@ const routes: Routes = [{
     ContractComponent,
     EmployeeComponent,
     ResetPassComponent,
+    UpdateEmployeeComponent,
     CheckpointComponent,
     TransferUpdateComponent,
-
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     ThemeModule,
+    HttpClientModule,
     NbMenuModule,
     ReactiveFormsModule,
     PrimengModule,

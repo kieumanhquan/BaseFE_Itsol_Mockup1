@@ -1,6 +1,5 @@
+import { TransferUpdateComponent } from './../../../home/transfers/transfer-update/transfer-update.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { TransferUpdateComponent } from './transfer-update.component';
 
 describe('TransferUpdateComponent', () => {
   let component: TransferUpdateComponent;
@@ -8,7 +7,7 @@ describe('TransferUpdateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TransferUpdateComponent ]
+      declarations: [ TransferUpdateComponent ],
     })
     .compileComponents();
   });
