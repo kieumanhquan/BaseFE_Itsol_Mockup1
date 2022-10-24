@@ -8,13 +8,16 @@ import { ProfileComponent } from './profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'primeng/api';
 import { PrimengModule } from '../../shared/primeng.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TransferComponent } from './transfer/transfer.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ContractComponent } from './contract/contract.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { ResetPassComponent } from './reset-pass/reset-pass.component';
-import { UpdateEmployeeComponent } from './employee/update-employee/update-employee.component';
-
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import { CheckpointComponent } from './checkpoint/checkpoint.component';
+import {TransferComponent} from './transfers/transfer/transfer.component';
+import {TransferUpdateComponent} from './transfers/transfer-update/transfer-update.component';
+import {UpdateEmployeeComponent} from './employee/update-employee/update-employee.component';
 
 
 const routes: Routes = [{
@@ -49,6 +52,14 @@ const routes: Routes = [{
       path: 'edit/:id',
       component: UpdateEmployeeComponent,
     },
+    {
+      path: 'checkpoint',
+      component: CheckpointComponent,
+    },
+    {
+      path: 'update-transfer/:id',
+      component: TransferUpdateComponent,
+    },
   ],
 }];
 
@@ -62,6 +73,8 @@ const routes: Routes = [{
     EmployeeComponent,
     ResetPassComponent,
     UpdateEmployeeComponent,
+    CheckpointComponent,
+    TransferUpdateComponent,
   ],
   imports: [
     CommonModule,
@@ -72,6 +85,9 @@ const routes: Routes = [{
     ReactiveFormsModule,
     PrimengModule,
     SharedModule,
+    MatButtonModule,
+    MatTableModule,
+
   ],
 })
 export class HomeModule { }

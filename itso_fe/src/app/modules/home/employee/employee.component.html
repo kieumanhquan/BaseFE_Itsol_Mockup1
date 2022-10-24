@@ -47,7 +47,7 @@
             </div>
           </div>
         <div class="footer mt-3">
-          <button type="button" class="btn btn-success" type="submit" (click)="onSubmit1()"> Tìm kiếm</button>
+          <button type="button" class="btn btn-success" (click)="onSubmit1()"> Tìm kiếm</button>
         </div>
       </form>
     </div>
@@ -151,7 +151,7 @@
             <div class="form-group row">
               <label class="col-md-2 col-form-label">Tên người dùng: </label>
               <div class="col-md-10">
-                <input class="form-control" type="text" formControlName="userName">
+                <input class="form-control" type="text" formControlName="userName" autocomplete="off">
                 <small class="col alert text-danger" role="alert"
                   *ngIf="formEmp.get('userName')?.errors?.required && formEmp.get('userName')?.touched">
                   Tên người dùng không được để trống !
@@ -162,7 +162,7 @@
             <div class="form-group row">
               <label class="col-md-2 col-form-label">Mật khẩu:</label>
               <div class="col-md-10">
-                <input class="form-control" type="password" formControlName="password" placeholder="Ex. 123@aaAA12">
+                <input class="form-control" type="password" formControlName="password" autocomplete="off" placeholder="Ex. 123@aaAA12">
                 <small class="col alert text-danger" role="alert"
                   *ngIf="formEmp.get('password')?.errors?.required && formEmp.get('password')?.touched">
                   Mật khẩu không được để trống !

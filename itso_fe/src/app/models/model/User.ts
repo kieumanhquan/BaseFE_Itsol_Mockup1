@@ -1,4 +1,5 @@
 import {Role} from './Role';
+import {Unit} from './Unit';
 export interface User{
   id: number;
   name: string;
@@ -12,4 +13,5 @@ export interface User{
   roles: Role[];
   active: boolean;
   delete: boolean;
+  unit: Unit;
 }

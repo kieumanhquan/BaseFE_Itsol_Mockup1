@@ -255,9 +255,9 @@ export class EmployeeComponent implements OnInit {
 
   onSubmit1() {
     console.log('......');
-    this.FillValueSearch();
-    this.pagination(0);
     this.initFormSearch();
+    this.pagination(0);
+    this.FillValueSearch();
   }
 }
 

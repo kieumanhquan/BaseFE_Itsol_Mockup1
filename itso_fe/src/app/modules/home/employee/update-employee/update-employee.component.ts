@@ -1,11 +1,16 @@
+import { User, Unit, Transfer } from './../employee.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ProfileService } from './../../profile/profile.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Unit, User } from './../employee.model';
 import {UserService} from './../../../../@core/services/user.service';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {EmployeeService} from '../employee.service';
 import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router} from '@angular/router';
+import { UnitService } from '../../../../services/UnitService';
+import { TransferService } from '../../../../services/TransferService';
 
 @Component({
   selector: 'ngx-update-employee',
@@ -19,6 +24,18 @@ export class UpdateEmployeeComponent implements OnInit {
   datas1: Unit[] = [];
   check: boolean;
   checkAcitve: boolean;
+  content: any;
+  units: Unit[];
+  transfer: Transfer = {};
+  formTransfer: FormGroup;
+  formUpdateTransfer: FormGroup;
+  userTransfer: User;
+  creator: User;
+  username: string;
+  unitOld: Unit;
+  dmUnitOld: User;
+  dmUnitNew: User;
+  isCheck: boolean;
 
 
   constructor(
@@ -26,6 +43,10 @@ export class UpdateEmployeeComponent implements OnInit {
     private readonly router: Router,
     private  toastr: ToastrService,
     private activedRoute: ActivatedRoute,
+    private modalService: NgbModal,
+    private profileService: ProfileService,
+    private unitService: UnitService,
+    private transferService: TransferService,
     private employeeService: EmployeeService,
     private userActive: UserService,
   ) {
@@ -51,6 +72,8 @@ export class UpdateEmployeeComponent implements OnInit {
       isLeader: ['', Validators.required],
     });
 
+
+
     this.activedRoute.paramMap.subscribe(
       params => {
         const idUser = params.get('id');
@@ -69,12 +92,75 @@ export class UpdateEmployeeComponent implements OnInit {
       },
     );
 
+    this.initForm();
+
     console.log(this.userActive.getDecodedAccessToken());
-    this.check1();
+    this.checkDm();
     this.checkHr();
     this.checkDmHr();
 
   }
+
+  openLg(content, id: any) {
+    this.getUserById(id);
+    this.findUnitNotJoinUser(id);
+    this.modalService.open(content, { size: 'lg', centered: true,  scrollable: true });
+  };
+
+  public findUnitNotJoinUser(id: any){
+    this.unitService.findUnitNotJoinUser(id).subscribe(
+      (data: any) => {
+        this.units = data;
+        console.log(data);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  initForm() {
+    this.formTransfer = this.fb.group({
+      transferName: ['', [Validators.required, Validators.maxLength(200)]],
+      unitNew: ['', Validators.required],
+      reasonTransfer: ['', [Validators.required, Validators.maxLength(200)]],
+    });
+  }
+
+
+  saveTransfer(){
+    this.addTransfer();
+    this.transferService.createTransfer(this.transfer).subscribe(res=>{
+      this.toastr.success('Thêm mới thành công');
+    }, error => {
+      this.toastr.error(error.message());
+    });
+    this.modalService.dismissAll();
+  }
+  addTransfer(){
+    const formValue = this.formTransfer.value;
+    console.log(formValue.transferName);
+    this.transfer.transferName = formValue.transferName;
+    this.transfer.reasonTransfer = formValue.reasonTransfer;
+    this.transfer.unitNew = formValue.unitNew;
+    // @ts-ignore
+    this.transfer.creator = this.creator;
+    // @ts-ignore
+    this.transfer.employee = this.userTransfer;
+
+  }
+
+  getUserById(id: number){
+    this.profileService.getUserById(id).subscribe(
+      (res)=>{
+        this.userTransfer = res;
+        this.unitOld = this.userTransfer.unit;
+        console.log(this.unitOld);
+        console.log(this.userTransfer);
+      });
+  }
+
+
 
   update(){
     this.addValueUser();
@@ -149,7 +235,7 @@ export class UpdateEmployeeComponent implements OnInit {
 
   }
 
-  check1(){
+  checkDm(){
     // eslint-disable-next-line eqeqeq
     if(this.userActive.getDecodedAccessToken().auth == 'ROLE_DM'){
       return true;

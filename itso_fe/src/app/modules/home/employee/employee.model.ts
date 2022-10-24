@@ -1,6 +1,5 @@
-
-export interface User {
-  id?: number;
+export class User {
+  id?: string;
   fullName?: string;
   email?: string;
   userName?: string;
@@ -17,6 +16,7 @@ export interface User {
   birthDay?: Date;
   delete?: boolean;
   active?: boolean;
+  school?: string;
   unit?: Unit;
 }
 
@@ -26,8 +26,24 @@ export interface Unit {
   status?: boolean;
 }
 
+export interface Transfer{
+  id?: number;
+  transferName?: string;
+  reasonTransfer?: string;
+  createdDate?: Date;
+  reasonNew?: string;
+  reasonOld?: string;
+  isStatusNew?: number;
+  isStatusOld?: number;
+  isDelete?: number;
+  unitNew?: Unit;
+  unitOld?: Unit;
+  employee?: User;
+  creator?: User;
+  transferDate?: Date;
+  status?: number;
 
-
+}
 
 export interface UserDTO {
   name?: string;

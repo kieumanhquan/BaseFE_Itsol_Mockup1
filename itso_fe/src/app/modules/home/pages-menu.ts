@@ -26,4 +26,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'globe-2-outline',
     link: '/home/transfer',
   },
+  {
+    title: 'CheckPoint',
+    icon: 'home-outline',
+    link: '/home/checkpoint',
+  },
 ];

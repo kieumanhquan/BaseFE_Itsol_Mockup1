@@ -1,120 +1,11 @@
-<div class="row">
-  <div class="col-md-4">
-    <div class="card card-user">
-      <div class="image">
-
-      </div>
-      <div class="card-body">
-
-        <p class="description text-center">
-          "I like the way you work it
-          <br> No diggity
-          <br> I wanna bag it up"
-        </p>
-      </div>
-      <div class="card-footer">
-        <hr>
-        <div class="button-container">
-          <div class="row">
-            <div class="col-lg-3 col-md-6 col-6 ml-auto">
-              <h5>12
-                <br>
-                <small>Files</small>
-              </h5>
-            </div>
-            <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-              <h5>2GB
-                <br>
-                <small>Used</small>
-              </h5>
-            </div>
-            <div class="col-lg-3 mr-auto">
-              <h5>24,6$
-                <br>
-                <small>Spent</small>
-              </h5>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Team Members</h4>
-      </div>
-      <div class="card-body">
-        <ul class="list-unstyled team-members">
-          <li>
-            <div class="row">
-              <div class="col-md-2 col-2">
-                <div class="avatar">
-                  <img src="assets/img/faces/ayo-ogunseinde-2.jpg" alt="Circle Image"
-                       class="img-circle img-no-padding img-responsive">
-                </div>
-              </div>
-              <div class="col-md-7 col-7">
-                DJ Khaled
-                <br/>
-                <span class="text-muted">
-                  <small>Offline</small>
-                </span>
-              </div>
-              <div class="col-md-3 col-3 text-right">
-                <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i>
-                </button>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="row">
-              <div class="col-md-2 col-2">
-                <div class="avatar">
-                  <img src="assets/img/faces/joe-gardner-2.jpg" alt="Circle Image"
-                       class="img-circle img-no-padding img-responsive">
-                </div>
-              </div>
-              <div class="col-md-7 col-7">
-                Creative Tim
-                <br/>
-                <span class="text-success">
-                  <small>Available</small>
-                </span>
-              </div>
-              <div class="col-md-3 col-3 text-right">
-                <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i>
-                </button>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="row">
-              <div class="col-md-2 col-2">
-                <div class="avatar">
-                  <img src="assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image"
-                       class="img-circle img-no-padding img-responsive">
-                </div>
-              </div>
-              <div class="col-ms-7 col-7">
-                Flume
-                <br/>
-                <span class="text-danger">
-                  <small>Busy</small>
-                </span>
-              </div>
-              <div class="col-md-3 col-3 text-right">
-                <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i>
-                </button>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+<div class="row justify-content-md-center">
   <div class="col-md-8">
     <div class="card card-user">
       <div class="card-header">
-        <h5 class="card-title">Edit Profile</h5>
+        <div class="row">
+          <img src="assets/images/alan.png" alt="Avatar"
+               style="width:200px; border-radius: 50%;  margin: 0 auto; margin-bottom: 20px;">
+        </div>
       </div>
       <div class="card-body">
         <form [formGroup]="formProfile" (ngSubmit)="onSubmit()">
@@ -130,11 +21,11 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Giới tính: </label>
-                <select class="form-select form-select-lg" aria-label="Default select example">
+                <select class="form-select form-select-lg" aria-label="Default select example" formControlName="gender">
                   <option selected >Select</option>
-                  <option value="1">Nam</option>
-                  <option value="2">Nữ</option>
-                  <option value="3">Khác</option>
+                  <option [selected]="gender === value"  value="1">Nam</option>
+                  <option [selected]="gender === value" value="2">Nữ</option>
+                  <option [selected]="gender === value" value="3">Khác</option>
                 </select>
               </div>
             </div>
@@ -178,15 +69,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>About Me</label>
-                <textarea
-                  class="form-control textarea">Oh so, your weak rhyme You doubt I'll bother, reading into it</textarea>
-              </div>
-            </div>
-          </div>
+
           <div class="row">
             <div class="update ml-auto mr-auto">
               <button type="submit" class="btn btn-primary btn-round" >Update Profile</button>
