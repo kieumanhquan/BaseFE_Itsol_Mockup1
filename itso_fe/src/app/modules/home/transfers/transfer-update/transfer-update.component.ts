@@ -113,7 +113,6 @@ export class TransferUpdateComponent implements OnInit {
     const jwtDecode = this.userService.getDecodedAccessToken();
     let role = jwtDecode.auth.split(',');
     // admin
-    console.log('kkkkk');
     if (role.includes('ROLE_ADMIN')) {
       this.cancleReview = true;
       console.log(this.cancleReview);
@@ -144,39 +143,57 @@ export class TransferUpdateComponent implements OnInit {
       this.toastr.error('Cập nhật thất bại')
     });
   }
-  refuse(){
-    if(this.transfer.status == 0 && this.transfer.isStatusOld == 0){
-      this.transfer.status = 2;
-      this.transfer.isStatusOld = 2;
-      this.update(this.transfer);
-      return;
-    }
-    if(this.transfer.status == 1 && this.transfer.isStatusOld ==1){
-      this.transfer.status = 2;
-      this.transfer.isStatusNew = 2;
-      this.update(this.transfer);
-      return;
-    }
 
-  }
   confirm(){
-    if(this.transfer.status == 0 && this.transfer.isStatusOld == 0){
-      this.transfer.status =1;
-      this.transfer.isStatusOld =1;
-      this.update(this.transfer);
-      return;
-    }
-    if(this.transfer.status == 1 && this.transfer.isStatusOld == 1){
+    const jwtDecode = this.userService.getDecodedAccessToken();
+    let role = jwtDecode.auth.split(',');
+
+    if (role.includes('ROLE_ADMIN')) {
       this.transfer.status = 4;
-      this.transfer.isStatusNew =1;
       this.transfer.transferDate = new Date();
       this.update(this.transfer);
-      return;
+    }else if(role.includes('ROLE_DM')){
+      if(this.transfer.status == 0 && this.transfer.successDate == null){
+        this.transfer.status = 1;
+        this.transfer.isStatusOld = 1;
+        this.transfer.successDate = new Date();
+        this.update(this.transfer);
+      }else if(this.transfer.status == 1 && this.transfer.successDate != null){
+        this.transfer.status = 4;
+        this.transfer.isStatusNew = 1;
+        this.transfer.transferDate = new Date();
+        this.update(this.transfer);
+      }
     }
 
+
   }
+  //từ chối
+  refuse(){
+    const jwtDecode = this.userService.getDecodedAccessToken();
+    let role = jwtDecode.auth.split(',');
+    if (role.includes('ROLE_ADMIN')) {
+      this.transfer.status = 2;
+      this.update(this.transfer);
+    }else if(role.includes('ROLE_DM')){
+        if(this.transfer.status == 0 && this.transfer.cancleDate == null){
+          this.transfer.status = 2;
+          this.transfer.isStatusOld = 2;
+          this.transfer.cancleDate = new Date();
+          this.update(this.transfer);
+        }else if(this.transfer.status == 1 && this.transfer.cancleDate == null){
+          this.transfer.status = 2;
+          this.transfer.isStatusNew = 1;
+          this.transfer.cancleDate = new Date();
+
+        }
+    }
+  }
+
+  //Hủy
   cancel(){
     this.transfer.status = 3;
+    console.log("chung");
     this.transferService.updateTransger(this.transfer).subscribe(res=>{
       this.toastr.success('Hủy thành công')
     }, error => {
@@ -184,6 +201,7 @@ export class TransferUpdateComponent implements OnInit {
     });
 
   }
+  //cập nhật creator
   update(transfer: Transfer){
     this.transferService.updateTransger(transfer).subscribe(res=>{
       this.toastr.success('Cập nhật thành công')
@@ -191,6 +209,8 @@ export class TransferUpdateComponent implements OnInit {
       this.toastr.error("Thất bại")
     });
   }
+
+
 
 
 }
