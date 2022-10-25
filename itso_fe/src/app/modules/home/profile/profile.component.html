@@ -18,10 +18,10 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>Giới tính: </label>
-                <select class="form-select form-select-lg" aria-label="Default select example" formControlName="gender">
+                <select class="form-control" aria-label="Default select example" formControlName="gender">
                   <option selected >Select</option>
                   <option [selected]="gender === value"  value="1">Nam</option>
                   <option [selected]="gender === value" value="2">Nữ</option>
@@ -29,9 +29,7 @@
                 </select>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>Birthday</label>
                 <input type="date" class="form-control"  formControlName="birthDay">
@@ -65,7 +63,7 @@
             <div class="col-md-4 pr-1">
               <div class="form-group">
                 <label>Chức vụ</label>
-                <input type="text" class="form-control" placeholder="City" value="Melbourne" disabled>
+                <input type="text" class="form-control"  formControlName="position"  disabled>
               </div>
             </div>
           </div>

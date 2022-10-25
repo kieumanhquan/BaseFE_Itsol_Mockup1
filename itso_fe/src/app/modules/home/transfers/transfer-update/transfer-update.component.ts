@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Transfer} from "../../../../models/model/Transfer";
 import {TransferService} from "../../../../services/TransferService";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../../@core/services/user.service";
@@ -7,7 +6,7 @@ import {ProfileService} from "../../profile/profile.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UnitService} from "../../../../services/UnitService";
 import {Unit} from "../../../../models/model/Unit";
-import {User} from "../../employee/employee.model";
+import {Transfer, User} from "../../employee/employee.model";
 import {SessionService} from "../../../../@core/services/session.service";
 import {ToastrService} from "ngx-toastr";
 
@@ -20,7 +19,7 @@ export class TransferUpdateComponent implements OnInit {
   transfer: Transfer;
   idTransfer: number;
   userLogin: User;
-  userCreator:any;
+  userCreator: any;
   formTransfer: FormGroup;
   units: Unit[];
   userTransfer: User;
@@ -57,11 +56,11 @@ export class TransferUpdateComponent implements OnInit {
           this.userCreator = res.creator;
           this.isCancelReview();
           //lay dmunitOld
-          this.userService.getDMByUnit(this.transfer.unitOld.id).subscribe(res=>{
+          this.userService.getDMByUnit(this.transfer.unitOld.id).subscribe(res => {
             this.dmUnitOld = res;
           });
           // lay ra dm unit new
-          this.userService.getDMByUnit(this.transfer.unitNew.id).subscribe(res=>{
+          this.userService.getDMByUnit(this.transfer.unitNew.id).subscribe(res => {
             this.dmUnitOld = res;
           })
           //
@@ -80,17 +79,16 @@ export class TransferUpdateComponent implements OnInit {
       console.log(res);
     });
     //mang unit
-      this.unitService.findAllUnit().subscribe(res=>{
-        this.units = res;
-      })
+    this.unitService.findAllUnit().subscribe(res => {
+      this.units = res;
+    })
     //init form
 
     //update form
 
 
-
-
   }
+
   initForm() {
     this.formTransfer = this.fb.group({
       transferName: ["", [Validators.required, Validators.maxLength(200)]],
@@ -98,15 +96,17 @@ export class TransferUpdateComponent implements OnInit {
       reasonTransfer: ['', [Validators.required, Validators.maxLength(200)]],
     });
   }
-  updateForm(){
+
+  updateForm() {
     this.formTransfer.patchValue({
-      transferName:this.transfer.transferName,
-      unitNew:this.transfer.unitNew,
-      reasonTransfer:this.transfer.reasonTransfer,
+      transferName: this.transfer.transferName,
+      unitNew: this.transfer.unitNew,
+      reasonTransfer: this.transfer.reasonTransfer,
     })
   }
-  isCancelReview(){
-    if(this.transfer.status > 1){
+
+  isCancelReview() {
+    if (this.transfer.status > 1) {
       this.cancleReview = false;
       return;
     }
@@ -118,16 +118,17 @@ export class TransferUpdateComponent implements OnInit {
       console.log(this.cancleReview);
       return;
     }
-    if(this.transfer.isStatusOld == 0 && this.transfer.status ==0){
+    if (this.transfer.isStatusOld == 0 && this.transfer.status == 0) {
       this.cancleReview = (this.dmUnitOld.id == this.userLogin.id);
       return;
     }
-    if(this.transfer.isStatusNew == 0 && this.transfer.status ==1){
+    if (this.transfer.isStatusNew == 0 && this.transfer.status == 1) {
       this.cancleReview = (this.dmUnitNew.id == this.userLogin.id);
     }
   }
+
   //đoc du lieu tu form
-  updateFormV2(){
+  updateFormV2() {
     let formValue = this.formTransfer.value;
     console.log(formValue.transferName)
     this.transfer.transferName = formValue.transferName;
@@ -135,92 +136,83 @@ export class TransferUpdateComponent implements OnInit {
     this.transfer.unitNew = formValue.unitNew;
   }
 
-  submit(){
+  submit() {
     this.updateFormV2();
-    this.transferService.updateTransger(this.transfer).subscribe(res=>{
+    this.transferService.updateTransfer(this.transfer).subscribe(res => {
       this.toastr.success('Cập nhật thành công')
     }, error => {
       this.toastr.error('Cập nhật thất bại')
     });
   }
-  refuse(){
-    if(this.transfer.status == 0 && this.transfer.isStatusOld == 0){
-      this.transfer.status = 2;
-      this.transfer.isStatusOld = 2;
-      this.update(this.transfer);
-      return;
-    }
-    if(this.transfer.status == 1 && this.transfer.isStatusOld ==1){
-      this.transfer.status = 2;
-      this.transfer.isStatusNew = 2;
-      this.update(this.transfer);
-      return;
-    }
 
-  confirm(){
-    const jwtDecode = this.userService.getDecodedAccessToken();
-    let role = jwtDecode.auth.split(',');
+    confirm()
+    {
+      const jwtDecode = this.userService.getDecodedAccessToken();
+      let role = jwtDecode.auth.split(',');
 
-    if (role.includes('ROLE_ADMIN')) {
-      this.transfer.status = 4;
-      this.transfer.transferDate = new Date();
-      this.update(this.transfer);
-    }else if(role.includes('ROLE_DM')){
-      if(this.transfer.status == 0 && this.transfer.successDate == null){
-        this.transfer.status = 1;
-        this.transfer.isStatusOld = 1;
-        this.transfer.successDate = new Date();
-        this.update(this.transfer);
-      }else if(this.transfer.status == 1 && this.transfer.successDate != null){
+      if (role.includes('ROLE_ADMIN')) {
         this.transfer.status = 4;
-        this.transfer.isStatusNew = 1;
         this.transfer.transferDate = new Date();
         this.update(this.transfer);
+      } else if (role.includes('ROLE_DM')) {
+        if (this.transfer.status == 0 && this.transfer.successDate == null) {
+          this.transfer.status = 1;
+          this.transfer.isStatusOld = 1;
+          this.transfer.successDate = new Date();
+          this.update(this.transfer);
+        } else if (this.transfer.status == 1 && this.transfer.successDate != null) {
+          this.transfer.status = 4;
+          this.transfer.isStatusNew = 1;
+          this.transfer.transferDate = new Date();
+          this.update(this.transfer);
+        }
       }
+
+
     }
-
-
-  }
-  //từ chối
-  refuse(){
-    const jwtDecode = this.userService.getDecodedAccessToken();
-    let role = jwtDecode.auth.split(',');
-    if (role.includes('ROLE_ADMIN')) {
-      this.transfer.status = 2;
-      this.update(this.transfer);
-    }else if(role.includes('ROLE_DM')){
-        if(this.transfer.status == 0 && this.transfer.cancleDate == null){
+    //từ chối
+    refuse()
+    {
+      const jwtDecode = this.userService.getDecodedAccessToken();
+      let role = jwtDecode.auth.split(',');
+      if (role.includes('ROLE_ADMIN')) {
+        this.transfer.status = 2;
+        this.update(this.transfer);
+      } else if (role.includes('ROLE_DM')) {
+        if (this.transfer.status == 0 && this.transfer.cancleDate == null) {
           this.transfer.status = 2;
           this.transfer.isStatusOld = 2;
           this.transfer.cancleDate = new Date();
           this.update(this.transfer);
-        }else if(this.transfer.status == 1 && this.transfer.cancleDate == null){
+        } else if (this.transfer.status == 1 && this.transfer.cancleDate == null) {
           this.transfer.status = 2;
           this.transfer.isStatusNew = 1;
           this.transfer.cancleDate = new Date();
 
         }
+      }
     }
-  }
 
-  //Hủy
-  cancel(){
-    this.transfer.status = 3;
-    console.log("chung");
-    this.transferService.updateTransger(this.transfer).subscribe(res=>{
-      this.toastr.success('Hủy thành công')
-    }, error => {
-      this.toastr.error("Thất bại")
-    });
+    //Hủy
+    cancel()
+    {
+      this.transfer.status = 3;
+      console.log("chung");
+      this.transferService.updateTransfer(this.transfer).subscribe(res => {
+        this.toastr.success('Hủy thành công')
+      }, error => {
+        this.toastr.error("Thất bại")
+      });
 
-  }
-  //cập nhật creator
-  update(transfer: Transfer){
-    this.transferService.updateTransger(transfer).subscribe(res=>{
-      this.toastr.success('Cập nhật thành công')
-    }, error => {
-      this.toastr.error("Thất bại")
-    });
+    }
+    //cập nhật creator
+    update(transfer: Transfer) {
+      this.transferService.updateTransfer(transfer).subscribe(res => {
+        this.toastr.success('Cập nhật thành công')
+      }, error => {
+        this.toastr.error("Thất bại")
+      });
+    }
   }
 
 

@@ -31,6 +31,8 @@ export interface Transfer{
   transferName?: string;
   reasonTransfer?: string;
   createdDate?: Date;
+  cancleDate?:Date;
+  successDate?:Date;
   reasonNew?: string;
   reasonOld?: string;
   isStatusNew?: number;
@@ -40,6 +42,7 @@ export interface Transfer{
   unitOld?: Unit;
   employee?: User;
   creator?: User;
+  adminReview?:User;
   transferDate?: Date;
   status?: number;
 
@@ -53,6 +56,20 @@ export interface UserDTO {
   salary?: number;
   birthDay?: Date;
   unit?: Unit;
+
+}
+
+export interface TransferDTO{
+  name?:string;
+  reason?:string;
+  unitOld?:Unit;
+  unitNew?:Unit;
+  successDay?:Date;
+  sortMultileColummList?: SortMultileColumm[];
+}
+export interface SortMultileColumm{
+  name?:string;
+  type?:string;
 }
 
 
