@@ -1,10 +1,10 @@
 export interface User {
-    fullName?:string;
-    email?:string;
-    userName?:string;
-    phoneNumber?:string;
-    homeTown?:string;
-    avatarName?:string;
-    gender?:string;
-    birthDay?:Date;
+    fullName?: string;
+    email?: string;
+    userName?: string;
+    phoneNumber?: string;
+    homeTown?: string;
+    avatarName?: string;
+    gender?: string;
+    birthDay?: Date;
 }

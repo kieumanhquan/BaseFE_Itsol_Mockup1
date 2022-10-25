@@ -8,7 +8,7 @@ describe('CheckpointComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CheckpointComponent ]
+      declarations: [ CheckpointComponent ],
     })
     .compileComponents();
   });

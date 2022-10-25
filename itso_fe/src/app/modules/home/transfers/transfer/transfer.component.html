@@ -56,7 +56,7 @@
       <div class="col-9"></div>
       <div class="col-3">
         <div>
-          <button class="btn btn-primary " (click)="openLg(content1, 31)">Tạo điều đợt điều chuyển</button>
+          <button class="btn btn-primary " (click)="openLg(content1, 25)">Tạo điều đợt điều chuyển</button>
         </div>
       </div>
     </div>
@@ -64,17 +64,17 @@
       <table class="table table-bordered">
         <thead>
         <tr class="bg-light">
-          <th (click)="sortByValues('transferName')" scope="col">Tên điều chuyển <i  class="fa fa-thin fa-arrow-up icon-color" ></i></th>
-          <th (click)="sortByValues('createdDate')"  scope="col">Ngày tạo <i class="fa fa-thin fa-arrow-up icon-color" ></i></th>
-          <th (click)="sortByValues('unitOld')" scope="col">Đơn vị cũ <i class="fa fa-thin fa-arrow-up icon-color" ></i></th>
-          <th (click)="sortByValues('unitNew')" scope="col">Đơn vị mới <i class="fa fa-thin fa-arrow-up icon-color" ></i></th>
-          <th scope="col">Nhân viên điều chuyển <i class="fa fa-thin fa-arrow-up icon-color" ></i></th>
-          <th scope="col">Người tạo <i class="fa fa-thin fa-arrow-up icon-color" ></i></th>
-          <th (click)="sortByValues('status')" scope="col">Status <i class="fa fa-thin fa-arrow-up icon-color" ></i></th>
+          <th scope="col">Tên điều chuyển</th>
+          <th scope="col">Ngày tạo</th>
+          <th scope="col">Đơn vị cũ</th>
+          <th scope="col">Đơn vị mới</th>
+          <th scope="col">Nhân viên điều chuyển</th>
+          <th scope="col">Người tạo</th>
+          <th scope="col">Status</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of transferList" (click)="sentoUpdate(item.id)">
+        <tr *ngFor="let item of datas " (click)="sentoUpdate(item.id)">
           <td>{{item.transferName}}</td>
           <td>{{item.createdDate | date: 'dd/MM/yyyy'}}</td>
           <td>{{item.unitOld.name}}</td>
@@ -92,15 +92,14 @@
     </div>
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
-            <a class="page-link" (click)="preNextPage('pre')">Previous</a>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">Previous</a>
           </li>
-          <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index"
-              class="page-item" [ngClass]="indexPage == i?'active':''">
-            <a class="page-link" (click)="pagination(i)">{{i + 1}}</a>
-          </li>
-          <li class="page-item" [ngClass]="(Page['totalPages'] - 1) == indexPage?'disabled':''">
-            <a class="page-link" (click)="preNextPage('next')">Next</a>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
           </li>
         </ul>
       </nav>

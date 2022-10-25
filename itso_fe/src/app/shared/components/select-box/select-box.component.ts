@@ -6,9 +6,10 @@ export interface Option {
 }
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'app-select',
   templateUrl: './select-box.component.html',
-  styleUrls: ['./select-box.component.scss']
+  styleUrls: ['./select-box.component.scss'],
 })
 export class SelectBoxComponent implements OnInit {
 
@@ -22,8 +23,7 @@ export class SelectBoxComponent implements OnInit {
     // this.enableToggle();
     this.selectedOption = actualOption;
     this.selectedOptionChange.emit(this.selectedOption);
-  }
-
+  };
 }
 
 

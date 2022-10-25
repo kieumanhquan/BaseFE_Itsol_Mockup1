@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TransferUpdateComponent } from './transfer-update.component';
+import { ReviewSalaryComponent } from './review-salary.component';
 
-describe('TransferUpdateComponent', () => {
-  let component: TransferUpdateComponent;
-  let fixture: ComponentFixture<TransferUpdateComponent>;
+describe('ReviewSalaryComponent', () => {
+  let component: ReviewSalaryComponent;
+  let fixture: ComponentFixture<ReviewSalaryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TransferUpdateComponent ],
+      declarations: [ ReviewSalaryComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TransferUpdateComponent);
+    fixture = TestBed.createComponent(ReviewSalaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

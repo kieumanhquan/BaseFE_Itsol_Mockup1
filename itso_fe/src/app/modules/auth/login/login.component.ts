@@ -1,3 +1,5 @@
+import { SessionService } from './../../../@core/services/session.service';
+import { ProfileService } from './../../home/profile/profile.service';
 import { UserService } from './../../../@core/services/user.service';
 import { Router } from '@angular/router';
 import { TokenService } from './../../../@core/services/token.service';
@@ -20,7 +22,9 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private tokenService: TokenService,
     private router: Router,
-    private userService: UserService) {
+    private userService: UserService,
+    private sessionService: SessionService,
+    private profileService: ProfileService) {
   }
 
   ngOnInit(): void {
@@ -31,7 +35,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
   initForm() {
     this.formLogin = this.fb.group({
       userName: ['', Validators.required],
@@ -39,13 +42,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  get f() {
-    return this.formLogin.controls;
-  }
+  // get f() {
+  //   return this.formLogin.controls;
+  // }
 
   onSubmit() {
-    console.log(this.formLogin.value);
     this.isSubmitted = true;
     if (this.formLogin.valid) {
       this.authService.login(this.formLogin.value).subscribe(
@@ -54,11 +55,28 @@ export class LoginComponent implements OnInit {
           this.tokenService.saveToken(data.token);
           const jwtDecode = this.userService.getDecodedAccessToken();
           this.tokenService.saveUser(jwtDecode.sub);
+          const role = jwtDecode.auth.split(',');
+          if (localStorage.getItem('auth-token')
+            && (role.includes('ROLE_ADMIN') || role.includes('ROLE_DM')
+              || role.includes('ROLE_HR') || role.includes('ROLE_DM_HR'))) {
+            this.router.navigate(['/home/']);
+            return;
+          }
+          this.saveUserId();
           // this.roles = this.tokenService.getUser().roles;
           this.router.navigate(['/home/']);
         },
       );
     }
+  }
+
+
+  saveUserId() {
+    const username = this.sessionService.getItem('auth-user');
+    this.profileService.getProfileByUserName(username).subscribe(
+      (res) => {
+        localStorage.setItem('id-user', res.object.id);
+      });
   }
 }
 

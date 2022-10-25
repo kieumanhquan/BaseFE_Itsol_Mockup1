@@ -21,7 +21,7 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -54,7 +54,7 @@ const configToast: any = {
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
     ToastrModule.forRoot(configToast),
-    NgbModule
+    NgbModule,
   ],
   bootstrap: [AppComponent],
 })

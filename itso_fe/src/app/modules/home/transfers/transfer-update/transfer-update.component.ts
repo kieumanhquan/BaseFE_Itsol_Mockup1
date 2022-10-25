@@ -143,6 +143,19 @@ export class TransferUpdateComponent implements OnInit {
       this.toastr.error('Cập nhật thất bại')
     });
   }
+  refuse(){
+    if(this.transfer.status == 0 && this.transfer.isStatusOld == 0){
+      this.transfer.status = 2;
+      this.transfer.isStatusOld = 2;
+      this.update(this.transfer);
+      return;
+    }
+    if(this.transfer.status == 1 && this.transfer.isStatusOld ==1){
+      this.transfer.status = 2;
+      this.transfer.isStatusNew = 2;
+      this.update(this.transfer);
+      return;
+    }
 
   confirm(){
     const jwtDecode = this.userService.getDecodedAccessToken();
@@ -213,4 +226,3 @@ export class TransferUpdateComponent implements OnInit {
 
 
 
-}

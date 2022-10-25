@@ -1,8 +1,8 @@
-import {User} from "./User";
-import {Unit} from "./Unit";
+import {User} from './User';
+import {Unit} from './Unit';
 
 export interface Transfer{
-  id?:number;
+  id?: number;
   transferName?: string;
   reasonTransfer?: string;
   createdDate?: Date;

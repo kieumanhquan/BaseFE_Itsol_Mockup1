@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TransferService} from "../../../../services/TransferService";
 import {User} from "../../employee/employee.model";
-import {Transfer, TransferDTO} from "../../../../models/model/Transfer";
+import {Transfer} from "../../../../models/model/Transfer";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrService} from "ngx-toastr";
@@ -62,7 +62,29 @@ export class TransferComponent implements OnInit {
     this.findUnitNotJoinUser(id);
     this.modalService.open(content, { size: 'lg', centered: true,  scrollable: true });
   }
+  //open modal edit
+  openLd(content, item:any) {
+    // console.log(item);
+    this.userTransfer = item.employee;
+    this.transfer = item;
+    this.findUnitNotJoinUser(item.employee.id);
+    this.userService.getDMByUnit(this.transfer.unitOld.id).subscribe(
+      (res)=>{
+        this.dmUnitOld = res;
+        console.log(this.dmUnitOld);
+      });
+    this.userService.getDMByUnit(this.transfer.unitNew.id).subscribe(
+      (res)=>{
+        this.dmUnitNew = res;
+        console.log(this.dmUnitNew);
+      });
+    this.isReview();
 
+
+
+    this.updateForm();
+    this.modalService.open(content, { size: 'lg', centered: true,  scrollable: true });
+  }
 
   ngOnInit(): void {
     this.getAllTransfer();
@@ -70,9 +92,7 @@ export class TransferComponent implements OnInit {
     this.initForm();
     // this.userService.getUserById(1);
 
-    this.initFormSearch();
-    this.initFormSort();
-    this.finAllUnit();
+
 
   }
   public getAllTransfer(){
@@ -86,14 +106,6 @@ export class TransferComponent implements OnInit {
       },
     );
   }
-
-  public finAllUnit(){
-    this.unitService.findAllUnit().subscribe(res=>{
-      this.unitData = res;
-    })
-  }
-
-
   public findUnitNotJoinUser(id:any){
     this.unitService.findUnitNotJoinUser(id).subscribe(
       (data: any) => {
@@ -169,10 +181,50 @@ export class TransferComponent implements OnInit {
         console.log(this.creator);
       });
   }
+  checkConFirmTranfer(){
+    if(this.transfer.isStatusOld == null){
+      this.transfer.status = 2;
+    }else{
+      this.transfer.status = 1;
+    }
+  }
+  checkRefuseTranfer(){
+    const jwt = this.userService.getDecodedAccessToken();
+    let role = jwt.auth.split(',');
+    if(role.includes('ROLE_ADMIN')){
+      this.transfer.status = 5;
+    }
+    else if(this.transfer.isStatusOld == null){
+      this.transfer.status = 5;
+      this.transfer.isStatusOld = 1;
+    }
+    else if(this.transfer.isStatusNew == null){
+      this.transfer.status = 5;
+      this.transfer.isStatusNew = 1;
+    }
+  }
+  updateTransfer(){
 
+  }
+  deleteTransfer(){
 
-
-
+  }
+  confirmTransfer(){
+    this.checkConFirmTranfer();
+    this.transferService.updateTransger(this.transfer).subscribe(res=>{
+      this.toastr.success('Cập nhật thành công')
+    }, error => {
+      this.toastr.error(error.message())
+    });
+  }
+  refuseTransfer(){
+    this.checkRefuseTranfer();
+    this.transferService.updateTransger(this.transfer).subscribe(res=>{
+      this.toastr.success('Cập nhật thành công')
+    }, error => {
+      this.toastr.error(error.message())
+    });
+  }
   //Phân trang
 
   //chuyển trang

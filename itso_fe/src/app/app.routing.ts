@@ -1,12 +1,9 @@
-
+import { TransferComponent } from './modules/home/transfers/transfer/transfer.component';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-
 import { AuthGuard } from './@core/guards/auth.guard';
 import {ForgotComponent} from './modules/auth/forgot/forgot.component';
-import {CheckpointComponent} from "./modules/home/checkpoint/checkpoint.component";
-import {TransferComponent} from "./modules/home/transfers/transfer/transfer.component";
-import {TransferUpdateComponent} from "./modules/home/transfers/transfer-update/transfer-update.component";
+import {CheckpointComponent} from './modules/home/checkpoint/checkpoint.component';
 
 export const routes: Routes = [
   {
@@ -39,7 +36,6 @@ export const routes: Routes = [
     path:'checkpoint',
     component: CheckpointComponent,
   },
-
 ];
 
 const config: ExtraOptions = {
