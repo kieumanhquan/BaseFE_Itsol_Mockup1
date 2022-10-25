@@ -26,13 +26,13 @@ export interface Unit {
   status?: boolean;
 }
 
-export interface Transfer{
+export interface Transfer {
   id?: number;
   transferName?: string;
   reasonTransfer?: string;
   createdDate?: Date;
-  cancleDate?:Date;
-  successDate?:Date;
+  cancleDate?: Date;
+  successDate?: Date;
   reasonNew?: string;
   reasonOld?: string;
   isStatusNew?: number;
@@ -42,14 +42,14 @@ export interface Transfer{
   unitOld?: Unit;
   employee?: User;
   creator?: User;
-  adminReview?:User;
+  adminReview?: User;
   transferDate?: Date;
   status?: number;
 
 }
 
 export interface UserDTO {
-  name?: string;
+  fullName?: string;
   email?: string;
   literacy?: string;
   position?: string;
@@ -59,17 +59,30 @@ export interface UserDTO {
 
 }
 
-export interface TransferDTO{
-  name?:string;
-  reason?:string;
-  unitOld?:Unit;
-  unitNew?:Unit;
-  successDay?:Date;
+export interface TransferDTO {
+  name?: string;
+  reason?: string;
+  unitOld?: Unit;
+  unitNew?: Unit;
+  successDay?: Date;
   sortMultileColummList?: SortMultileColumm[];
 }
-export interface SortMultileColumm{
-  name?:string;
-  type?:string;
+export interface SortMultileColumm {
+  name?: string;
+  type?: string;
+}
+
+export interface TransferDTO {
+  name?: string;
+  reason?: string;
+  unitOld?: Unit;
+  unitNew?: Unit;
+  successDay?: Date;
+  sortMultileColummList?: SortMultileColumm[];
+}
+export interface SortMultileColumm {
+  name?: string;
+  type?: string;
 }
 
 

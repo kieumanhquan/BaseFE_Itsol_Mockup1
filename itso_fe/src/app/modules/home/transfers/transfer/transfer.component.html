@@ -7,8 +7,7 @@
             <div class="col-12 row">
               <div class="form-group col-12 col-sm-6">
                 <label for="inputname">Tên đợt chuyển</label>
-                <input type="text" formControlName="name" class="form-control"
-                       id="inputname">
+                <input type="text" formControlName="name" class="form-control" id="inputname">
               </div>
               <div class="form-group col-12 col-sm-6">
                 <label for="reason">Lý do chuyển</label>
@@ -62,30 +61,30 @@
     <div class="row mt-3">
       <table class="table table-bordered table-hover">
         <thead>
-        <tr class="bg-light">
-          <th (click)="sortByValue('transferName')" scope="col">Tên điều chuyển <i class="fas fa-sort"></i></th>
-          <th (click)="sortByValue('createdDate')" scope="col">Ngày tạo <i class="fas fa-sort"></i></th>
-          <th (click)="sortByValue('unitOld')" scope="col">Đơn vị cũ <i class="fas fa-sort"></i></th>
-          <th (click)="sortByValue('unitNew')" scope="col">Đơn vị mới <i class="fas fa-sort"></i></th>
-          <th (click)="sortByValue('employee')" scope="col">Nhân viên điều chuyển <i class="fas fa-sort"></i></th>
-          <th (click)="sortByValue('creator')" scope="col">Người tạo <i class="fas fa-sort"></i></th>
-          <th (click)="sortByValue('status')" scope="col">Status <i class="fas fa-sort"></i></th>
-        </tr>
+          <tr class="bg-light">
+            <th (click)="sortByValue('transferName')" scope="col">Tên điều chuyển <i class="fas fa-sort"></i></th>
+            <th (click)="sortByValue('createdDate')" scope="col">Ngày tạo <i class="fas fa-sort"></i></th>
+            <th (click)="sortByValue('unitOld')" scope="col">Đơn vị cũ <i class="fas fa-sort"></i></th>
+            <th (click)="sortByValue('unitNew')" scope="col">Đơn vị mới <i class="fas fa-sort"></i></th>
+            <th (click)="sortByValue('employee')" scope="col">Nhân viên điều chuyển <i class="fas fa-sort"></i></th>
+            <th (click)="sortByValue('creator')" scope="col">Người tạo <i class="fas fa-sort"></i></th>
+            <th (click)="sortByValue('status')" scope="col">Status <i class="fas fa-sort"></i></th>
+          </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of transferList" (click)="sentoUpdate(item.id)">
-          <td>{{item.transferName}}</td>
-          <td>{{item.createdDate | date: 'dd/MM/yyyy'}}</td>
-          <td>{{item.unitOld.name}}</td>
-          <td>{{item.unitNew.name}}</td>
-          <td>{{item.employee.fullName}}</td>
-          <td>{{item.creator.fullName}}</td>
-          <td *ngIf="item.status == 0">Đang chờ xét duyệt</td>
-          <td *ngIf="item.status == 1">Đang xét duyệt</td>
-          <td *ngIf="item.status == 2">Đã từ chối</td>
-          <td *ngIf="item.status == 3">Đã hủy</td>
-          <td *ngIf="item.status == 4">Xét duyệt thành công</td>
-        </tr>
+          <tr *ngFor="let item of transferList" (click)="sentoUpdate(item.id)">
+            <td>{{item.transferName}}</td>
+            <td>{{item.createdDate | date: 'dd/MM/yyyy'}}</td>
+            <td>{{item.unitOld.name}}</td>
+            <td>{{item.unitNew.name}}</td>
+            <td>{{item.employee.fullName}}</td>
+            <td>{{item.creator.fullName}}</td>
+            <td *ngIf="item.status === 0">Đang chờ xét duyệt</td>
+            <td *ngIf="item.status === 1">Đang xét duyệt</td>
+            <td *ngIf="item.status === 2">Đã từ chối</td>
+            <td *ngIf="item.status === 3">Đã hủy</td>
+            <td *ngIf="item.status === 4">Xét duyệt thành công</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -96,14 +95,14 @@
     </select>
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
-        <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
+        <li class="page-item " [ngClass]="indexPage === 0?'disabled':''">
           <a class="page-link" (click)="preNextPage('pre')">Previous</a>
         </li>
-        <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index"
-            class="page-item" [ngClass]="indexPage == i?'active':''">
+        <li *ngFor="let pageNumber of [].constructor(page['totalPages']);let i = index" class="page-item"
+          [ngClass]="indexPage === i?'active':''">
           <a class="page-link" (click)="pagination(i)">{{i + 1}}</a>
         </li>
-        <li class="page-item" [ngClass]="(Page['totalPages'] - 1) == indexPage?'disabled':''">
+        <li class="page-item" [ngClass]="(page['totalPages'] - 1) === indexPage?'disabled':''">
           <a class="page-link" (click)="preNextPage('next')">Next</a>
         </li>
       </ul>
@@ -125,7 +124,7 @@
             <label>Tên đợt điều chuyển:</label>
             <input type="text" class="form-control" formControlName="transferName">
             <small class="col alert text-danger" role="alert"
-                   *ngIf="formTransfer.get('transferName')?.errors?.required && formTransfer.get('transferName')?.touched">
+              *ngIf="formTransfer.get('transferName')?.errors?.required && formTransfer.get('transferName')?.touched">
               Tên đợt điều chuyển không được để trống
             </small>
           </div>
@@ -140,7 +139,7 @@
               <option *ngFor="let unitNew of units" [ngValue]="unitNew">{{unitNew.name}}</option>
             </select>
             <small class="col alert text-danger" role="alert"
-                   *ngIf="formTransfer.get('unitNew')?.errors?.required && formTransfer.get('unitNew')?.touched">
+              *ngIf="formTransfer.get('unitNew')?.errors?.required && formTransfer.get('unitNew')?.touched">
               Vui lòng chọn đơn vị điều chuyển tới !
             </small>
           </div>
@@ -151,9 +150,9 @@
           <div class="form-floating">
             <label for="floatingTextarea2">Lý do điều chuyển:</label>
             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                      style="height: 100px" formControlName="reasonTransfer"></textarea>
+              style="height: 100px" formControlName="reasonTransfer"></textarea>
             <small class="col alert text-danger" role="alert"
-                   *ngIf="formTransfer.get('reasonTransfer')?.errors?.required && formTransfer.get('reasonTransfer')?.touched">
+              *ngIf="formTransfer.get('reasonTransfer')?.errors?.required && formTransfer.get('reasonTransfer')?.touched">
               Lý do điều chuyển không được để trống
             </small>
           </div>
@@ -165,31 +164,31 @@
       <h4>Thông tin nhân viên</h4>
       <table class="table">
         <thead>
-        <tr>
-          <th scope="col">Mã NV</th>
-          <th scope="col">Tên nhân viên</th>
-          <th scope="col">Ngày sinh</th>
-          <th scope="col">Giới tính</th>
-          <th scope="col">Địa chỉ</th>
-          <th scope="col">CCCD</th>
-          <th scope="col">Email</th>
-          <th scope="col">Chức vụ</th>
-          <th scope="col">Đơn vị</th>
-        </tr>
+          <tr>
+            <th scope="col">Mã NV</th>
+            <th scope="col">Tên nhân viên</th>
+            <th scope="col">Ngày sinh</th>
+            <th scope="col">Giới tính</th>
+            <th scope="col">Địa chỉ</th>
+            <th scope="col">CCCD</th>
+            <th scope="col">Email</th>
+            <th scope="col">Chức vụ</th>
+            <th scope="col">Đơn vị</th>
+          </tr>
         </thead>
         <tbody>
-        <tr *ngIf="userTransfer">
-          <td>{{userTransfer.id}}</td>
-          <td>{{userTransfer.fullName}}</td>
-          <td>{{userTransfer.birthDay | date: 'dd/MM/yyyy'}}</td>
-          <td>{{userTransfer.gender}}</td>
-          <td>{{userTransfer.cccd}}</td>
-          <td>{{userTransfer.email}}</td>
-          <td>{{userTransfer.position}}</td>
-          <td>{{userTransfer.position}}</td>
-          <td>{{userTransfer.unit.name}}</td>
+          <tr *ngIf="userTransfer">
+            <td>{{userTransfer.id}}</td>
+            <td>{{userTransfer.fullName}}</td>
+            <td>{{userTransfer.birthDay | date: 'dd/MM/yyyy'}}</td>
+            <td>{{userTransfer.gender}}</td>
+            <td>{{userTransfer.cccd}}</td>
+            <td>{{userTransfer.email}}</td>
+            <td>{{userTransfer.position}}</td>
+            <td>{{userTransfer.position}}</td>
+            <td>{{userTransfer.unit.name}}</td>
 
-        </tr>
+          </tr>
         </tbody>
       </table>
     </div>
