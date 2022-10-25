@@ -6,6 +6,8 @@ export interface Transfer{
   transferName?: string;
   reasonTransfer?: string;
   createdDate?: Date;
+  cancleDate?:Date;
+  successDate?:Date;
   reasonNew?: string;
   reasonOld?: string;
   isStatusNew?: number;
@@ -15,7 +17,15 @@ export interface Transfer{
   unitOld?: Unit;
   employee?: User;
   creator?: User;
+  adminReview?:User;
   transferDate?: Date;
   status?: number;
 
+}
+export interface TransferDTO{
+  transferName?:string;
+  reason?:string
+  unitOld?:Unit;
+  unitNew?:Unit;
+  successDay?:Date;
 }

@@ -44,5 +44,11 @@ export class TransferService{
   public getTransferById(id: number): Observable<any>{
     return this.http.get<Transfer>(`${this.apiServerUrlPrivate}`+'public/transfer/' + id);
   }
+  //PageandSort
+  getPageTransfer(page:any,userId,transferSearch,sortByValue,descAsc):Observable<any>{
+    return this.http.put<any>
+      (  `${this.apiServerUrlPrivate}public/transfer/page-and-sort/?page=${page}&userId=${userId}&sortByValue=${sortByValue}&descAsc=${descAsc}`
+        ,transferSearch);
+  }
 
 }
