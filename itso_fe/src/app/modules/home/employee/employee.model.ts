@@ -46,7 +46,7 @@ export interface Transfer{
 }
 
 export interface UserDTO {
-  name?: string;
+  fullName?: string;
   email?: string;
   literacy?: string;
   position?: string;
