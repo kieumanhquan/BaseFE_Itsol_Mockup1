@@ -224,12 +224,11 @@
   <div class="footer">
     <div class="row">
       <div class="col-8"></div>
-
-      <div class=" col-2 text-center m-0">
+      <div class=" col-2">
         <button type="button " class="btn btn-success" (click)="update()" [disabled]="!formEdit.valid">Cập nhật</button>
       </div>
-      <div class=" col-2 text-center m-0">
-        <button class="btn btn-primary " (click)="openLg(content, this.user.id)">Tạo điều đợt điều chuyển</button>
+      <div class=" col-2 ">
+        <button class="btn btn-primary " (click)="openLg(content, user.id)">Điều chuyển</button>
       </div>
     </div>
   </div>
@@ -292,27 +291,27 @@
           <tr>
             <th scope="col">Mã NV</th>
             <th scope="col">Tên nhân viên</th>
+            <th scope="col">Đơn vị</th>
             <th scope="col">Ngày sinh</th>
             <th scope="col">Giới tính</th>
             <th scope="col">Địa chỉ</th>
             <th scope="col">CCCD</th>
             <th scope="col">Email</th>
             <th scope="col">Chức vụ</th>
-            <th scope="col">Đơn vị</th>
+
           </tr>
         </thead>
         <tbody>
           <tr *ngIf="userTransfer">
             <td>{{userTransfer.id}}</td>
             <td>{{userTransfer.fullName}}</td>
+            <td>{{userTransfer.unit.name}}</td>
             <td>{{userTransfer.birthDay | date: 'dd/MM/yyyy'}}</td>
             <td>{{userTransfer.gender}}</td>
+            <td>{{userTransfer.homeTown}}</td>
             <td>{{userTransfer.cccd}}</td>
             <td>{{userTransfer.email}}</td>
             <td>{{userTransfer.position}}</td>
-            <td>{{userTransfer.position}}</td>
-            <td>{{userTransfer.unit.name}}</td>
-
           </tr>
         </tbody>
       </table>
@@ -320,10 +319,10 @@
   </div>
   <div class="modal-footer">
     <div>
-      <button type="submit" class="btn btn-warning" (click)="addTransfer()">Hủy bỏ</button>
+      <button type="submit" class="btn btn-warning">Hủy bỏ</button>
     </div>
     <div>
-      <button type="submit" class="btn btn-success" (click)="onSubmit()">Điều chuyển</button>
+      <button type="submit" class="btn btn-success" (click)="saveTransfer()">Điều chuyển</button>
     </div>
   </div>
 </ng-template>
