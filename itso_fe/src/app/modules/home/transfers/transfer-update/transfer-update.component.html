@@ -16,7 +16,7 @@
       <div  class="col-md-4">
         <label>Đơn vị mới</label>
         <select  class="custom-select" formControlName="unitNew">
-          <option  *ngFor="let item of units"  [ngClass]="{'displayNone': transfer.unitOld.id === item.id}" [selected]="item.id === formTransfer.value.unitNew.id" [value]="item">{{item.name}}</option>
+          <option  *ngFor="let item of units"  [ngClass]="{'displayNone': transfer.unitOld.id == item.id}" [selected]="item.id == formTransfer.value.unitNew.id" [value]="item">{{item.name}}</option>
         </select>
       </div>
     </div>
@@ -54,11 +54,11 @@
       </table>
     </div>
     <div  class="row justify-content-sm-end">
-      <button *ngIf="transfer.creator.id === userLogin.id && transfer.status === 0"
-              class="btn btn-sm btn-outline-danger col-sm-1 m-1" (click)="cancel()">Hủy bỏ</button>
-      <button *ngIf="transfer.creator.id === userLogin.id && transfer.status === 0"
-              class="btn btn-sm btn-outline-success col-sm-1 m-1" (click)="submit()">Update</button>
-      <button *ngIf="cancleReview" type="button" class="btn btn-sm btn-outline-warning col-sm-1 m-1" (click)="refuse">Từ chối</button>
+      <button *ngIf="transfer.creator.id == userLogin.id && transfer.status == 0"
+              type="button" class="btn btn-sm btn-outline-danger col-sm-1 m-1" (click)="cancel()">Hủy bỏ</button>
+      <button *ngIf="transfer.creator.id == userLogin.id && transfer.status == 0"
+              type="button" class="btn btn-sm btn-outline-success col-sm-1 m-1" (click)="submit()">Update</button>
+      <button *ngIf="cancleReview" type="button" class="btn btn-sm btn-outline-warning col-sm-1 m-1" (click)="refuse()">Từ chối</button>
       <button *ngIf="cancleReview" type="button" class="btn btn-sm btn-outline-primary col-sm-1 m-1" (click)="confirm()">Xét duyệt</button>
     </div>
   </form>
