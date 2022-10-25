@@ -247,11 +247,15 @@ export class TransferComponent implements OnInit {
     }
     console.log(this.transferDTO);
     this.indexPage = page
+    this.showLoader = true;
     this.transferService.getPageTransfer(this.indexPage, this.userId,this.size
       , this.transferDTO)
       .subscribe(res => {
+        this.showLoader = false;
         this.transferList = res.object.content;
         this.Page = res.object;
+      }, error => {
+        this.showLoader = false;
       })
   }
   preNextPage(selector: string) {
@@ -261,10 +265,12 @@ export class TransferComponent implements OnInit {
   }
 
   OnSearch() {
+
     this.updateTransferSearch();
     this.initFormSearch();
     this.pagination(0);
     this.togger();
+
   }
 
   updateTransferSearch() {

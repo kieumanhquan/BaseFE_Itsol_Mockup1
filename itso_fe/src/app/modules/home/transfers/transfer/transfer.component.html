@@ -89,11 +89,14 @@
         </tbody>
       </table>
     </div>
-    <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1">
-      <option selected>5</option>
-      <option>10</option>
-      <option>15</option>
-    </select>
+    <div class="row mt-3 justify-content-sm-end">
+      <label>Size page:  </label>
+      <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1">
+        <option selected>5</option>
+        <option>10</option>
+        <option>15</option>
+      </select>
+    </div>
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
@@ -110,7 +113,6 @@
     </nav>
 
   </div>
-  <button class="btn btn-primary" type="button" (click)="haha()"></button>
 </p-card>
 <ng-template #content1 let-modal>
   <div class="modal-header">
