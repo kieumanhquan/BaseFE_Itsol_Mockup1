@@ -43,6 +43,10 @@ export class TransferComponent implements OnInit {
   formSort: FormGroup;
   sortBy: string;
   descAsc = 'desc';
+  showLoader = false;
+  size = 5;
+
+
   constructor(
     private transferService: TransferService,
     private unitService: UnitService,
@@ -54,10 +58,13 @@ export class TransferComponent implements OnInit {
     private sessionService: SessionService,
     private profileService: ProfileService,
     config: NgbModalConfig,
-  ) { }
+  ) {
+  }
+
   //open modal create
   openLg(content, id: any) {
     this.getUserById(id);
+
     this.findUnitNotJoinUser(id);
     this.modalService.open(content, { size: 'lg', centered: true, scrollable: true });
   }
@@ -84,6 +91,7 @@ export class TransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   this.transferDTO.sortMultileColummList = [];
     this.getAllTransfer();
     this.getByUserName();
     this.initForm();
@@ -154,6 +162,7 @@ export class TransferComponent implements OnInit {
     this.transfer.employee = this.userTransfer;
 
   }
+
   initForm() {
     this.formTransfer = this.fb.group({
       transferName: ['', [Validators.required, Validators.maxLength(200)]],
@@ -218,6 +227,9 @@ export class TransferComponent implements OnInit {
       this.toastr.error(error.message());
     });
   }
+
+
+
   //Phân trang
 
   //chuyển trang
@@ -225,7 +237,11 @@ export class TransferComponent implements OnInit {
     const url = '/home/update-transfer/' + id;
     this.router.navigate([url]);
   }
-
+  //chuyen trang list
+  sentolist(id: number){
+    const url = '/home/transfer';
+    this.router.navigate([url]);
+  }
   // search and sort
   initFormSearch() {
     this.formSearch = this.fb.group({
@@ -273,8 +289,8 @@ export class TransferComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   OnSearch() {
     this.updateTransferSearch();
-    this.pagination(0);
     this.initFormSearch();
+    this.pagination(0);
     this.togger();
   }
 
@@ -304,9 +320,36 @@ export class TransferComponent implements OnInit {
   }
 
 
-  sortByValues(transferName: string) {
-    this.sortBy = transferName;
-    this.descAsc = this.descAsc === 'desc' ? 'asc' : 'desc';
+  sortByValue(sortValues: string){
+    const length = this.transferDTO.sortMultileColummList.length;
+    const sortValue: SortMultileColumm = {name:sortValues, type:'desc'};
+    if(!length){
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      const sortValue: SortMultileColumm = {name:sortValues, type:'desc'};
+      this.transferDTO.sortMultileColummList.push(sortValue);
+    }else {
+      let notContacts = true;
+      this.transferDTO.sortMultileColummList.forEach(value => {
+        if(value.name === sortValues){
+          value.type = value.type === 'desc'?'asc':'desc';
+          notContacts = false;
+        }
+      });
+      if(notContacts){
+        this.transferDTO.sortMultileColummList.push(sortValue);
+      }
+    }
     this.pagination(this.indexPage);
+  }
+
+
+  pageItem(pageItems){
+    this.size = pageItems;
+    this.indexPage = 0;
+    this.pagination(this.indexPage);
+  }
+
+  haha(){
+    this.showLoader = true;
   }
 }

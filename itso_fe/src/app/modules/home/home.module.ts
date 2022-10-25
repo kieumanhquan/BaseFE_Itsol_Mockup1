@@ -18,6 +18,7 @@ import { CheckpointComponent } from './checkpoint/checkpoint.component';
 import {TransferComponent} from './transfers/transfer/transfer.component';
 import {TransferUpdateComponent} from './transfers/transfer-update/transfer-update.component';
 import {UpdateEmployeeComponent} from './employee/update-employee/update-employee.component';
+import { ReviewSalaryComponent } from './checkpoint/review-salary/review-salary.component';
 
 
 const routes: Routes = [{
@@ -75,6 +76,7 @@ const routes: Routes = [{
     UpdateEmployeeComponent,
     CheckpointComponent,
     TransferUpdateComponent,
+    ReviewSalaryComponent,
   ],
   imports: [
     CommonModule,

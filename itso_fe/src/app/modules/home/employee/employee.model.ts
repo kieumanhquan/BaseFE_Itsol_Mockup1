@@ -56,6 +56,20 @@ export interface UserDTO {
   salary?: number;
   birthDay?: Date;
   unit?: Unit;
+
+}
+
+export interface TransferDTO {
+  name?: string;
+  reason?: string;
+  unitOld?: Unit;
+  unitNew?: Unit;
+  successDay?: Date;
+  sortMultileColummList?: SortMultileColumm[];
+}
+export interface SortMultileColumm {
+  name?: string;
+  type?: string;
 }
 
 export interface TransferDTO {
