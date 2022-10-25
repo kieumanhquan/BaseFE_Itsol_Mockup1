@@ -56,15 +56,15 @@ export class LoginComponent implements OnInit {
           const jwtDecode = this.userService.getDecodedAccessToken();
           this.tokenService.saveUser(jwtDecode.sub);
           const role = jwtDecode.auth.split(',');
+          this.saveUserId();
           if (localStorage.getItem('auth-token')
             && (role.includes('ROLE_ADMIN') || role.includes('ROLE_DM')
               || role.includes('ROLE_HR') || role.includes('ROLE_DM_HR'))) {
             this.router.navigate(['/home/']);
             return;
           }
-          this.saveUserId();
           // this.roles = this.tokenService.getUser().roles;
-          this.router.navigate(['/home/']);
+          this.router.navigate(['/home/employee']);
         },
       );
     }
@@ -73,9 +73,11 @@ export class LoginComponent implements OnInit {
 
   saveUserId() {
     const username = this.sessionService.getItem('auth-user');
+    console.log(username);
     this.profileService.getProfileByUserName(username).subscribe(
       (res) => {
-        localStorage.setItem('id-user', res.object.id);
+        console.log(res);
+        localStorage.setItem('id-user', res.id);
       });
   }
 }

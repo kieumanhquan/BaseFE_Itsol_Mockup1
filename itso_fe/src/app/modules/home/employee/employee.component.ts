@@ -32,7 +32,7 @@ export class EmployeeComponent implements OnInit {
   datas1: Unit[] = [];
   public messages = '';
   user: User = {};
-  sortBy = 'name';
+  sortBy = 'fullName';
   descAsc = 'desc';
   idUser: any;
   indexPage = 0;
@@ -65,7 +65,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.idUser = localStorage.getItem('userId');
+    this.idUser = localStorage.getItem('id-user');
     this.pagination(this.indexPage);
     this.getAllUnit();
     this.initFormSearch();
@@ -231,7 +231,7 @@ export class EmployeeComponent implements OnInit {
 
   initFormSearch() {
     this.formSearch = this.fb.group({
-      name: '',
+      fullName: '',
       email: '',
       literacy: '',
       salary: '',
@@ -242,7 +242,7 @@ export class EmployeeComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   FillValueSearch() {
     const formSearchValue = this.formSearch.value;
-    this.userSearch.name = formSearchValue.name;
+    this.userSearch.fullName = formSearchValue.fullName;
     this.userSearch.email = formSearchValue.email;
     this.userSearch.literacy = formSearchValue.literacy;
     this.userSearch.salary = formSearchValue.salary;
@@ -254,10 +254,9 @@ export class EmployeeComponent implements OnInit {
   }
 
   onSubmit1() {
-    console.log('......');
-    this.initFormSearch();
-    this.pagination(0);
     this.FillValueSearch();
+    this.pagination(0);
+    this.initFormSearch();
   }
 }
 
