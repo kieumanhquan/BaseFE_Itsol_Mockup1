@@ -81,11 +81,11 @@
           <td>{{item.unitNew.name}}</td>
           <td>{{item.employee.fullName}}</td>
           <td>{{item.creator.fullName}}</td>
-          <td *ngIf="item.status == 0">Đang chờ xét duyệt</td>
-          <td *ngIf="item.status == 1">Đang xét duyệt</td>
-          <td *ngIf="item.status == 2">Đã từ chối</td>
-          <td *ngIf="item.status == 3">Đã hủy</td>
-          <td *ngIf="item.status == 4">Xét duyệt thành công</td>
+          <td *ngIf="item.status === 0">Đang chờ xét duyệt</td>
+          <td *ngIf="item.status === 1">Đang xét duyệt</td>
+          <td *ngIf="item.status === 2">Đã từ chối</td>
+          <td *ngIf="item.status === 3">Đã hủy</td>
+          <td *ngIf="item.status === 4">Xét duyệt thành công</td>
         </tr>
         </tbody>
       </table>

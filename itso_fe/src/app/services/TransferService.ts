@@ -30,7 +30,7 @@ export class TransferService{
     );
   }
 
-  public updateTransger(transfer: Transfer): Observable<any> {
+  public updateTransfer(transfer: Transfer): Observable<any> {
     return this.http.put(`${this.apiServerUrlPrivate}`+'public/transfer',transfer).pipe(
       tap(updateTransfer => console.log(`receivedJob=${JSON.stringify(updateTransfer)}`)),
     );
@@ -45,8 +45,9 @@ export class TransferService{
     return this.http.get<Transfer>(`${this.apiServerUrlPrivate}`+'public/transfer/' + id);
   }
   //PageandSort
-  getPageTransfer(page:any,userId,transferSearch,sortByValue,descAsc):Observable<any>{
+  getPageTransfer(page: any,userId,transferSearch,sortByValue,descAsc): Observable<any>{
     return this.http.put<any>
+      // eslint-disable-next-line max-len
       (  `${this.apiServerUrlPrivate}public/transfer/page-and-sort/?page=${page}&userId=${userId}&sortByValue=${sortByValue}&descAsc=${descAsc}`
         ,transferSearch);
   }
