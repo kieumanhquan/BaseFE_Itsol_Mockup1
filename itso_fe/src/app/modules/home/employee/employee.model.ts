@@ -59,31 +59,20 @@ export interface UserDTO {
 
 }
 
-export interface TransferDTO {
-  name?: string;
-  reason?: string;
-  unitOld?: Unit;
-  unitNew?: Unit;
-  successDay?: Date;
+export interface TransferDTO{
+  name?:string;
+  reason?:string;
+  unitOld?:Unit;
+  unitNew?:Unit;
+  successDay?:Date;
   sortMultileColummList?: SortMultileColumm[];
 }
-export interface SortMultileColumm {
-  name?: string;
-  type?: string;
+export interface SortMultileColumm{
+  name?:string;
+  type?:string;
 }
 
-export interface TransferDTO {
-  name?: string;
-  reason?: string;
-  unitOld?: Unit;
-  unitNew?: Unit;
-  successDay?: Date;
-  sortMultileColummList?: SortMultileColumm[];
-}
-export interface SortMultileColumm {
-  name?: string;
-  type?: string;
-}
+
 
 
 

@@ -37,8 +37,7 @@ export class TransferComponent implements OnInit {
   page: object = {};
   userId: any;
   formSearch: FormGroup;
-  transferDTO: TransferDTO = {
-  };
+  transferDTO: TransferDTO = {};
   showHiden = false;
   formSort: FormGroup;
   sortBy: string;
@@ -91,14 +90,16 @@ export class TransferComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.transferDTO.sortMultileColummList = [];
-    this.getAllTransfer();
+    this.transferDTO.sortMultileColummList = [];
     this.getByUserName();
     this.initForm();
-    // this.userService.getUserById(1)
+    this.finAllUnit();
+    this.initFormSearch();
+
+
   }
 
-  public getAllTransfer() {
+  public getAllTransfer(){
     this.transferService.getAll().subscribe(
       (data: any) => {
         this.datas = data;
@@ -109,7 +110,15 @@ export class TransferComponent implements OnInit {
       },
     );
   }
-  public findUnitNotJoinUser(id: any) {
+
+  public finAllUnit(){
+    this.unitService.findAllUnit().subscribe(res=>{
+      this.unitData = res;
+    })
+  }
+
+
+  public findUnitNotJoinUser(id:any){
     this.unitService.findUnitNotJoinUser(id).subscribe(
       (data: any) => {
         this.units = data;
@@ -121,38 +130,38 @@ export class TransferComponent implements OnInit {
     );
   }
 
-  getUserById(id: number) {
+  getUserById(id: number){
     this.profileService.getUserById(id).subscribe(
-      (res) => {
+      (res)=>{
         this.userTransfer = res;
         this.unitOld = this.userTransfer.unit;
         console.log(this.unitOld);
         console.log(this.userTransfer);
       });
   }
-  getByUserName() {
-    this.username = this.sessionService.getItem('auth-user');
+  getByUserName(){
+    this.username=this.sessionService.getItem('auth-user');
     this.profileService.getProfileByUserName(this.username).subscribe(
-      (res) => {
+      (res)=>{
         this.creator = res;
         this.userId = res.id;
         this.pagination(this.indexPage);
         console.log(this.userId);
       });
   }
-  onSubmit() {
-    alert('lưu');
+  onSubmit(){
+    alert("lưu");
     this.addTransfer();
     this.transferService.createTransfer(this.transfer).subscribe(res => {
-      this.toastr.success('Thêm mới thành công');
+      this.toastr.success('Thêm mới thành công')
     }, error => {
-      this.toastr.error(error.message());
+      this.toastr.error(error.message())
     });
     this.modalService.dismissAll();
   }
-  addTransfer() {
-    const formValue = this.formTransfer.value;
-    console.log(formValue.transferName);
+  addTransfer(){
+    let formValue = this.formTransfer.value;
+    console.log(formValue.transferName)
     this.transfer.transferName = formValue.transferName;
     this.transfer.reasonTransfer = formValue.reasonTransfer;
     this.transfer.unitNew = formValue.unitNew;
@@ -165,26 +174,27 @@ export class TransferComponent implements OnInit {
 
   initForm() {
     this.formTransfer = this.fb.group({
-      transferName: ['', [Validators.required, Validators.maxLength(200)]],
+      transferName: ["", [Validators.required, Validators.maxLength(200)]],
       unitNew: ['', Validators.required],
       reasonTransfer: ['', [Validators.required, Validators.maxLength(200)]],
     });
   }
-  updateForm() {
+  updateForm(){
     this.formTransfer.patchValue({
-      transferName: this.transfer.transferName,
-      unitNew: this.transfer.unitNew,
-      reasonTransfer: this.transfer.reasonTransfer,
-    });
+      transferName:this.transfer.transferName,
+      unitNew:this.transfer.unitNew,
+      reasonTransfer:this.transfer.reasonTransfer,
+    })
   }
 
-  getByDmByUnitId(id: any) {
+  getByDmByUnitId(id:any){
     this.userService.getDMByUnit(id).subscribe(
-      (res) => {
+      (res)=>{
         this.creator = res;
         console.log(this.creator);
       });
   }
+
   checkConFirmTranfer() {
     if (this.transfer.isStatusOld == null) {
       this.transfer.status = 2;
@@ -192,9 +202,10 @@ export class TransferComponent implements OnInit {
       this.transfer.status = 1;
     }
   }
+
   checkRefuseTranfer() {
     const jwt = this.userService.getDecodedAccessToken();
-    const role = jwt.auth.split(',');
+    let role = jwt.auth.split(',');
     if (role.includes('ROLE_ADMIN')) {
       this.transfer.status = 5;
     } else if (this.transfer.isStatusOld == null) {
@@ -205,26 +216,14 @@ export class TransferComponent implements OnInit {
       this.transfer.isStatusNew = 1;
     }
   }
-  updateTransfer() {
 
-  }
-  deleteTransfer() {
 
-  }
   confirmTransfer() {
     this.checkConFirmTranfer();
     this.transferService.updateTransfer(this.transfer).subscribe(res => {
-      this.toastr.success('Cập nhật thành công');
+      this.toastr.success('Cập nhật thành công')
     }, error => {
-      this.toastr.error(error.message());
-    });
-  }
-  refuseTransfer() {
-    this.checkRefuseTranfer();
-    this.transferService.updateTransfer(this.transfer).subscribe(res => {
-      this.toastr.success('Cập nhật thành công');
-    }, error => {
-      this.toastr.error(error.message());
+      this.toastr.error(error.message())
     });
   }
 
@@ -232,13 +231,13 @@ export class TransferComponent implements OnInit {
 
   //Phân trang
 
-  //chuyển trang
-  sentoUpdate(id: number) {
+  //chuyển trang edit
+  sentoUpdate(id:number){
     const url = '/home/update-transfer/' + id;
     this.router.navigate([url]);
   }
   //chuyen trang list
-  sentolist(id: number){
+  sentolist(id:number){
     const url = '/home/transfer';
     this.router.navigate([url]);
   }
@@ -260,44 +259,32 @@ export class TransferComponent implements OnInit {
   }
   infotransfer(id) {
     const url = '/admin/transfer-information/' + id;
-    this.router.navigate([url]);
+    this.router.navigate([url])
   }
   pagination(page: any) {
     if (page < 0) {
       page = 0;
     }
-    this.indexPage = page;
-    this.transferDTO.name = 'chung';
-    this.showLoader = true;
-    this.transferService.getPageTransfer(this.indexPage, this.userId
-      , this.transferDTO, this.sortBy, this.descAsc)
+    console.log(this.transferDTO);
+    this.indexPage = page
+    this.transferService.getPageTransfer(this.indexPage, this.userId,this.size
+      , this.transferDTO)
       .subscribe(res => {
-        this.showLoader = false;
         this.transferList = res.object.content;
-        console.log(res);
         this.page = res.object;
-      }, error => {
-        this.showLoader = false;
-      });
+      })
   }
   preNextPage(selector: string) {
-    if (selector === 'pre') {
-      --this.indexPage;
-    }
-    if (selector === 'next') {
-      ++this.indexPage;
-    }
+    if (selector == 'pre') --this.indexPage;
+    if (selector == 'next') ++this.indexPage;
     this.pagination(this.indexPage);
   }
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   OnSearch() {
-
     this.updateTransferSearch();
     this.initFormSearch();
     this.pagination(0);
     this.togger();
-
   }
 
   updateTransferSearch() {
@@ -311,38 +298,31 @@ export class TransferComponent implements OnInit {
   }
 
   findUnit(id: any) {
-    return this.unitData.find(unit => unit.id === id);
+    return this.unitData.find(unit => {
+      return unit.id == id;
+    })
   }
 
   togger() {
     this.showHiden = !this.showHiden;
   }
 
-  sort() {
-    this.sortBy = this.formSort.value.typeSort;
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    this.descAsc === 'asc' ? this.descAsc = 'desc' : this.descAsc = 'asc';
-    this.pagination(this.indexPage);
-  }
-
-
-  sortByValue(sortValues: string){
+  sortByValue(sortValues:string){
     const length = this.transferDTO.sortMultileColummList.length;
-    const sortValue: SortMultileColumm = {name:sortValues, type:'desc'};
+    const sortValue:SortMultileColumm = {name:sortValues, type:"desc"}
     if(!length){
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      const sortValue: SortMultileColumm = {name:sortValues, type:'desc'};
-      this.transferDTO.sortMultileColummList.push(sortValue);
+      const sortValue:SortMultileColumm = {name:sortValues, type:"desc"}
+      this.transferDTO.sortMultileColummList.push(sortValue)
     }else {
       let notContacts = true;
       this.transferDTO.sortMultileColummList.forEach(value => {
-        if(value.name === sortValues){
-          value.type = value.type === 'desc'?'asc':'desc';
+        if(value.name == sortValues){
+          value.type = value.type == 'desc'?'asc':'desc';
           notContacts = false;
         }
-      });
+      })
       if(notContacts){
-        this.transferDTO.sortMultileColummList.push(sortValue);
+        this.transferDTO.sortMultileColummList.push(sortValue)
       }
     }
     this.pagination(this.indexPage);
@@ -354,7 +334,6 @@ export class TransferComponent implements OnInit {
     this.indexPage = 0;
     this.pagination(this.indexPage);
   }
-
   haha(){
     this.showLoader = true;
   }

@@ -6,6 +6,7 @@ import { SessionService } from '../../../@core/services/session.service';
 import { User } from './profile.model';
 import { ProfileService } from './profile.service';
 import {ToastrService} from 'ngx-toastr';
+import {EmployeeService} from "../employee/employee.service";
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ProfileComponent implements OnInit {
   formProfile: FormGroup;
   user: User;
   username: string;
+  userId: number;
 
   constructor(
     private sessionService: SessionService,
@@ -25,6 +27,7 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private primengConfig: PrimeNGConfig,
     private  toastr: ToastrService,
+    private  employeeService: EmployeeService,
 
   ) { }
 
@@ -35,13 +38,12 @@ export class ProfileComponent implements OnInit {
   }
   initForm(){
     this.formProfile = this.fb.group({
-      name: ['', Validators.required],
+      fullName: ['', Validators.required],
       email: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       birthDay: ['', Validators.required],
       homeTown: ['', Validators.required],
       gender: ['', Validators.required],
-      fullName: ['', Validators.required],
       position: ['', Validators.required],
     });
   }
@@ -52,6 +54,7 @@ export class ProfileComponent implements OnInit {
       (res)=>{
         this.updateForm(res);
         this.user = res;
+        this.userId = res.id;
 
 
       });
@@ -72,8 +75,8 @@ export class ProfileComponent implements OnInit {
   }
   onSubmit(){
       this.updateUser();
-      this.profileService.updateProfile(this.user).subscribe((res: any)=>{
-      this.toastr.success('Update thành công');
+      this.employeeService.updateUser(this.userId,this.user).subscribe((res: any)=>{
+        this.toastr.success('Update thành công');
       });
   }
   updateUser(){

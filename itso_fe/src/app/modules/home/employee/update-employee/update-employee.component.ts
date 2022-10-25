@@ -11,6 +11,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ActivatedRoute, Router} from '@angular/router';
 import { UnitService } from '../../../../services/UnitService';
 import { TransferService } from '../../../../services/TransferService';
+import {SessionService} from "../../../../@core/services/session.service";
 
 @Component({
   selector: 'ngx-update-employee',
@@ -48,6 +49,7 @@ export class UpdateEmployeeComponent implements OnInit {
     private unitService: UnitService,
     private transferService: TransferService,
     private employeeService: EmployeeService,
+    private sessionService: SessionService,
     private userActive: UserService,
   ) {
   }
@@ -103,6 +105,8 @@ export class UpdateEmployeeComponent implements OnInit {
 
   openLg(content, id: any) {
     this.getUserById(id);
+    console.log(id);
+    this.getByUserName();
     this.findUnitNotJoinUser(id);
     this.modalService.open(content, { size: 'lg', centered: true,  scrollable: true });
   };
@@ -138,7 +142,7 @@ export class UpdateEmployeeComponent implements OnInit {
     this.modalService.dismissAll();
   }
   addTransfer(){
-    const formValue = this.formTransfer.value;
+    let formValue = this.formTransfer.value;
     console.log(formValue.transferName);
     this.transfer.transferName = formValue.transferName;
     this.transfer.reasonTransfer = formValue.reasonTransfer;
@@ -148,6 +152,14 @@ export class UpdateEmployeeComponent implements OnInit {
     // @ts-ignore
     this.transfer.employee = this.userTransfer;
 
+  }
+  getByUserName(){
+    this.username=this.sessionService.getItem('auth-user');
+    this.profileService.getProfileByUserName(this.username).subscribe(
+      (res)=>{
+        this.creator = res;
+        console.log(res);
+      });
   }
 
   getUserById(id: number){
