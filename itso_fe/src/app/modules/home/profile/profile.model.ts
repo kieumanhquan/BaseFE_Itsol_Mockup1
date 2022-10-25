@@ -7,4 +7,5 @@ export interface User {
     avatarName?: string;
     gender?: string;
     birthDay?: Date;
+    position?: string;
 }

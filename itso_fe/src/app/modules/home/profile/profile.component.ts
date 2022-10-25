@@ -42,6 +42,7 @@ export class ProfileComponent implements OnInit {
       homeTown: ['', Validators.required],
       gender: ['', Validators.required],
       fullName: ['', Validators.required],
+      position: ['', Validators.required],
     });
   }
 
@@ -65,6 +66,7 @@ export class ProfileComponent implements OnInit {
       birthDay:user.birthDay,
       homeTown:user.homeTown,
       gender: user.gender,
+      position: user.position,
     });
 
   }

@@ -1,8 +1,7 @@
-
 <p-card [class.mt-2]="$any(true)">
   <div class="container">
     <div class="row justify-content-center">
-      <form  [formGroup]="formSearch">
+      <form [formGroup]="formSearch">
         <div class="form-row">
           <div class="col-8 row">
             <div class="col-12 row">
@@ -26,7 +25,7 @@
               </div>
             </div>
 
-            <div  class="form-group row col-md-12">
+            <div class="form-group row col-md-12">
 
               <div class="col-6 ">
                 <label>Đơn vị cũ</label>
@@ -45,7 +44,7 @@
             </div>
             <div class="row">
               <div class="col-1"></div>
-              <button class="btn btn-primary" type="button" (click)="OnSearch()" >Tìm kiếm</button>
+              <button class="btn btn-primary" type="button" (click)="OnSearch()">Tìm kiếm</button>
             </div>
           </div>
         </div>
@@ -61,20 +60,20 @@
       </div>
     </div>
     <div class="row mt-3">
-      <table class="table table-bordered">
+      <table class="table table-bordered table-hover">
         <thead>
         <tr class="bg-light">
-          <th scope="col">Tên điều chuyển</th>
-          <th scope="col">Ngày tạo</th>
-          <th scope="col">Đơn vị cũ</th>
-          <th scope="col">Đơn vị mới</th>
-          <th scope="col">Nhân viên điều chuyển</th>
-          <th scope="col">Người tạo</th>
-          <th scope="col">Status</th>
+          <th (click)="sortByValue('transferName')" scope="col">Tên điều chuyển <i class="fas fa-sort"></i></th>
+          <th (click)="sortByValue('createdDate')" scope="col">Ngày tạo <i class="fas fa-sort"></i></th>
+          <th (click)="sortByValue('unitOld')" scope="col">Đơn vị cũ <i class="fas fa-sort"></i></th>
+          <th (click)="sortByValue('unitNew')" scope="col">Đơn vị mới <i class="fas fa-sort"></i></th>
+          <th (click)="sortByValue('employee')" scope="col">Nhân viên điều chuyển <i class="fas fa-sort"></i></th>
+          <th (click)="sortByValue('creator')" scope="col">Người tạo <i class="fas fa-sort"></i></th>
+          <th (click)="sortByValue('status')" scope="col">Status <i class="fas fa-sort"></i></th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of datas " (click)="sentoUpdate(item.id)">
+        <tr *ngFor="let item of transferList" (click)="sentoUpdate(item.id)">
           <td>{{item.transferName}}</td>
           <td>{{item.createdDate | date: 'dd/MM/yyyy'}}</td>
           <td>{{item.unitOld.name}}</td>
@@ -90,21 +89,28 @@
         </tbody>
       </table>
     </div>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link" href="#">Previous</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        </ul>
-      </nav>
+    <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1">
+      <option selected>5</option>
+      <option>10</option>
+      <option>15</option>
+    </select>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
+          <a class="page-link" (click)="preNextPage('pre')">Previous</a>
+        </li>
+        <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index"
+            class="page-item" [ngClass]="indexPage == i?'active':''">
+          <a class="page-link" (click)="pagination(i)">{{i + 1}}</a>
+        </li>
+        <li class="page-item" [ngClass]="(Page['totalPages'] - 1) == indexPage?'disabled':''">
+          <a class="page-link" (click)="preNextPage('next')">Next</a>
+        </li>
+      </ul>
+    </nav>
 
   </div>
+  <button class="btn btn-primary" type="button" (click)="haha()"></button>
 </p-card>
 <ng-template #content1 let-modal>
   <div class="modal-header">
@@ -197,3 +203,23 @@
     </div>
   </div>
 </ng-template>
+
+<div class="loader" *ngIf="showLoader">
+  <div class="loader-inner">
+    <div class="loader-line-wrap">
+      <div class="loader-line"></div>
+    </div>
+    <div class="loader-line-wrap">
+      <div class="loader-line"></div>
+    </div>
+    <div class="loader-line-wrap">
+      <div class="loader-line"></div>
+    </div>
+    <div class="loader-line-wrap">
+      <div class="loader-line"></div>
+    </div>
+    <div class="loader-line-wrap">
+      <div class="loader-line"></div>
+    </div>
+  </div>
+</div>
